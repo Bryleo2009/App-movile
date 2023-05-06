@@ -13,7 +13,9 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        //cuando inicie
         new Handler().postDelayed(new Runnable() {
+            //que espere 3 segundos y me envie a MainActiviry
             @Override
             public void run() {
                 Intent intent = new Intent(SplashScreen.this, MainActivity.class);

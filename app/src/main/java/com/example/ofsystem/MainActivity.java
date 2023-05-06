@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnNuevo.setOnClickListener(this);
         listProduct.setOnItemClickListener(this);
 
+        productService.listarProductos(null);
         productService.listarProductos(listProduct);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
