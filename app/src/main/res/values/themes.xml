@@ -1,0 +1,44 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--Cosas que yo creo-->
+    <attr name="tituloStyle" format="reference" />
+    <attr name="SubtituloStyle" format="reference" />
+
+    <!--Esquema Base-->
+    <style name="Theme.Ejer1" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/colorPrimary_light</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_light</item>
+        <item name="colorAccent">@color/colorAccent_light</item>
+
+        <!--Componentes nuevos-->
+        <!-- tituloStyle -->
+        <item name="tituloStyle">@style/titulo_light</item>
+        <!-- SubtituloStyle -->
+        <item name="SubtituloStyle">@style/subtitulo_light</item>
+    </style>
+
+    <!--    Estilo general Texto-->
+    <style name="Titulo">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Subtitulo">
+        <item name="android:textSize">12dp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+
+    <!-- Estilos de texto -->
+    <style name="titulo_light" parent="Titulo">
+        <item name="android:textColor">@color/titulo_lithg</item>
+    </style>
+    <style name="subtitulo_light" parent="Subtitulo">
+        <item name="android:textColor">@color/subtitulo_light</item>
+    </style>
+  <!-- Base application theme. -->
+    <style name="Base.Theme.Ejer1" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+</resources>

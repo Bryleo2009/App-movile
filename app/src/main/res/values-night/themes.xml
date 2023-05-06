@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <!-- Customize your dark theme here. -->
+    <style name="Base.Theme.Ejer1" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <item name="colorPrimary">@color/colorPrimary_dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_dark</item>
+        <item name="colorAccent">@color/colorAccent_dark</item>
+
+        <!--Componentes nuevos-->
+        <!-- tituloStyle -->
+        <item name="tituloStyle">@style/titulo_dark</item>
+        <!-- SubtituloStyle -->
+        <item name="SubtituloStyle">@style/subtitulo_dark</item>
+    </style>
+
+
+    <!-- Estilos de texto -->
+    <style name="titulo_dark" parent="Titulo">
+        <item name="android:textColor">@color/titulo_dark</item>
+    </style>
+    <style name="subtitulo_dark" parent="Subtitulo">
+        <item name="android:textColor">@color/subtitulo_dark</item>
+    </style>
+
+
+    <style name="Theme.Ejer1" parent="Base.Theme.Ejer1" />
+
+</resources>

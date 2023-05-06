@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:theme="@style/Theme.Ejer1"
+        android:textAppearance="?attr/tituloStyle"
+        android:id="@+id/txtNombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginEnd="5dp"
+        android:paddingLeft="15dp"
+        android:text="Nombre del Producto"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/txtId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:theme="@style/Theme.Ejer1"
+        android:textAppearance="?attr/SubtituloStyle"
+        android:id="@+id/txtDescripcion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Descripcion del producto"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombre" />
+
+    <TextView
+        android:theme="@style/Theme.Ejer1"
+        android:id="@+id/txtTipo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
+        android:text="Tipo Producto"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/txtPrecio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescripcion" />
+
+    <TextView
+        android:theme="@style/Theme.Ejer1"
+        android:id="@+id/txtPrecio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingBottom="10dp"
+        android:text="Precio"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtTipo"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescripcion" />
+
+    <TextView
+        android:theme="@style/Theme.Ejer1"
+        android:id="@+id/txtId"
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginStart="255dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="44dp"
+        android:text="Id"
+        android:textSize="12dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtNombre"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
