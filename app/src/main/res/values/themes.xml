@@ -2,6 +2,7 @@
     <!--Cosas que yo creo-->
     <attr name="tituloStyle" format="reference" />
     <attr name="SubtituloStyle" format="reference" />
+    <attr name="toolbarTitleTextColor" format="reference" />
 
     <!--Esquema Base-->
     <style name="Theme.Ejer1" parent="Theme.Material3.Light.NoActionBar">
@@ -15,6 +16,9 @@
         <item name="tituloStyle">@style/titulo_light</item>
         <!-- SubtituloStyle -->
         <item name="SubtituloStyle">@style/subtitulo_light</item>
+        <!-- Establece el color del título en el modo claro -->
+        <item name="toolbarTitleTextColor">@style/toolbarTitleTextColor_ligth</item>
+
     </style>
 
     <!--    Estilo general Texto-->
@@ -35,6 +39,11 @@
     <style name="subtitulo_light" parent="Subtitulo">
         <item name="android:textColor">@color/subtitulo_light</item>
     </style>
+    <style name="toolbarTitleTextColor_ligth">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
   <!-- Base application theme. -->
     <style name="Base.Theme.Ejer1" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
