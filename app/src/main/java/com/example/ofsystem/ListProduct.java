@@ -1,26 +1,24 @@
 package com.example.ofsystem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.ofsystem.Componet.Modal;
 import com.example.ofsystem.Model.Producto;
-import com.example.ofsystem.Model.Rol;
 import com.example.ofsystem.Service.ProductoServiceImpl;
-import com.example.ofsystem.Service.RolServiceImpl;
 
 //tengo que implementar ambas librerias, para el click del boton y el click de la lista
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
+public class ListProduct extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
     //creacion de variables globales que usaré
     ListView listProduct;
@@ -31,8 +29,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_list_product);
 
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
         listProduct = findViewById(R.id.listProductos);
         btnNuevo = findViewById(R.id.btnNuevo);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         productService.listarProductos(null);
         productService.listarProductos(listProduct);
 
+        //activacion del toolbar
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //accion al refrescar la vista
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -52,6 +57,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    //me regresa a la vista home, necesita implementacion de import android.view.MenuItem;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            // Acción que deseas realizar al hacer clic en la flecha de navegación
+            // Por ejemplo, puedes finalizar la actividad actual y regresar a la anterior
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    //accion click del boton
     @Override
     public void onClick(View v) {
         if (v == btnNuevo) {
@@ -60,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    //accion click de la lista
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent == listProduct) {
@@ -78,4 +99,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
 }
