@@ -57,7 +57,8 @@
         android:text="Color"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/editTextText4"
-        tools:layout_editor_absoluteX="5dp" />
+        tools:layout_editor_absoluteX="5dp"
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/txtTalla"
@@ -72,7 +73,8 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextText"
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/txtMarca"
@@ -153,7 +155,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        tools:visibility="gone" />
 
     <EditText
         android:id="@+id/editTextText2"
@@ -201,7 +204,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEtiqueta" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEtiqueta"
+        tools:visibility="gone" />
 
     <ImageView
         android:id="@+id/imgQr"

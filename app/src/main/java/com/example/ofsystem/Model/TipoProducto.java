@@ -1,15 +1,25 @@
 package com.example.ofsystem.Model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TipoProducto {
+
     public int idTipoProduc;
+
     private String identItem;
+
     private  String nombreItem;
 
+
     private  String abreviItem;
+
 
     private  String vistaItem;
 

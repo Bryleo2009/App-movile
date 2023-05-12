@@ -14,6 +14,7 @@
         <item name="SubtituloStyle">@style/subtitulo_dark</item>
         <!-- Establece el color del título en el modo oscuro -->
         <item name="toolbarTitleTextColor">@style/toolbarTitleTextColor_dark</item>
+        <item name="iconoStyle">@style/Icono.Nocturno</item>
     </style>
 
 
@@ -27,6 +28,9 @@
     <style name="toolbarTitleTextColor_dark">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">18sp</item>
+    </style>
+    <style name="Icono.Nocturno">
+        <item name="android:tint">@color/colorPrimary_dark</item>
     </style>
 
 

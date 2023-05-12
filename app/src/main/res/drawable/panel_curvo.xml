@@ -3,8 +3,8 @@
     <!--    <solid android:color="#DA1919" /> &lt;!&ndash; Color de fondo del panel curveado &ndash;&gt;-->
     <gradient
         android:angle="45"
-        android:endColor="#FFB700"
-        android:startColor="#FF00FF"
+        android:endColor="@color/ic_launcher_background"
+        android:startColor="@color/colorAccent_light"
         android:type="linear" />
     <corners android:radius="50dp" /> <!-- Radio de los bordes para crear la curva -->
 </shape>

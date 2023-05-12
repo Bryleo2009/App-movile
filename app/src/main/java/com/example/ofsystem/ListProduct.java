@@ -1,20 +1,18 @@
 package com.example.ofsystem;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.View;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.ofsystem.Componet.Modal;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.ofsystem.Model.Producto;
+import com.example.ofsystem.Service.ModalServiceImpl;
 import com.example.ofsystem.Service.ProductoServiceImpl;
 
 //tengo que implementar ambas librerias, para el click del boton y el click de la lista
@@ -30,6 +28,7 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_product);
+
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -92,7 +91,7 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
             System.out.println("Prodcuto seleccionado: " + seleccion.toString());
 
             // Crear una instancia del diálogo y pasarle los datos
-            Modal dialog = Modal.newInstance(seleccion);
+            ModalServiceImpl dialog = ModalServiceImpl.newInstance(seleccion);
 
             // Mostrar el diálogo
             dialog.show(getSupportFragmentManager(), "my_dialog");

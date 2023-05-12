@@ -3,6 +3,8 @@
     <attr name="tituloStyle" format="reference" />
     <attr name="SubtituloStyle" format="reference" />
     <attr name="toolbarTitleTextColor" format="reference" />
+    <attr name="iconoStyle" format="reference" />
+    <attr name="transparentButton" format="reference" />
 
     <!--Esquema Base-->
     <style name="Theme.Ejer1" parent="Theme.Material3.Light.NoActionBar">
@@ -18,7 +20,8 @@
         <item name="SubtituloStyle">@style/subtitulo_light</item>
         <!-- Establece el color del título en el modo claro -->
         <item name="toolbarTitleTextColor">@style/toolbarTitleTextColor_ligth</item>
-
+        <item name="iconoStyle">@style/Icono.Claro</item>
+        <item name="transparentButton">@style/transparentButton</item>
     </style>
 
     <!--    Estilo general Texto-->
@@ -43,8 +46,22 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="Icono">
+        <item name="android:tint">@color/colorPrimary_light</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="Icono.Claro">
+        <item name="android:tint">@color/colorPrimary_light</item>
+    </style>
+    <style name="transparentButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
 
-  <!-- Base application theme. -->
+
+    <!-- Base application theme. -->
     <style name="Base.Theme.Ejer1" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->

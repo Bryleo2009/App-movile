@@ -8,8 +8,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.example.ofsystem.Api.ProductoApi;
 import com.example.ofsystem.Config.Config;
 import com.example.ofsystem.Model.Producto;
@@ -43,6 +41,7 @@ public class ProductoServiceImpl {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
         Call<List<Producto>> call = ProductoApi.getProductos();
+        System.out.println(ProductoApi.getProductos());
         call.enqueue(new Callback<List<Producto>>() {
             @Override
             public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {

@@ -1,15 +1,21 @@
 package com.example.ofsystem.Model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
 
+
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Producto implements Serializable {
+	
 	public int idProduct;
 	public String IUP;
 	public String descripcionProduct;
@@ -23,9 +29,75 @@ public class Producto implements Serializable {
 	public Marca idMarca;
 	public TipoProducto idTipoProduc;
 	public List<Etiquetas> idEtiqueta;
-	public List<Talla> idTalla;
-	public List<Color> idColor;
+
 	public boolean isExistente;
+
+
+	public String concatenarTalla(List<Talla> lista) {
+		StringBuilder sb = new StringBuilder();
+		for (Talla obje : lista) {
+			if(obje.getVistaItem() == null){
+				sb.append(' ' +", ");
+			} else {
+				sb.append(obje.getVistaItem() +", ");
+			}
+		}
+		return sb.toString();
+	}
+
+	public String concatenarEtiqueta(List<Etiquetas> lista) {
+		StringBuilder sb = new StringBuilder();
+		for (Etiquetas obje : lista) {
+			if(obje.getVistaItem() == null){
+				sb.append(' ' +", ");
+			} else {
+				sb.append(obje.getVistaItem() +", ");
+			}
+		}
+		return sb.toString();
+	}
+
+	public String concatenarColor(List<Color> lista) {
+		StringBuilder sb = new StringBuilder();
+		for (Color obje : lista) {
+			if(obje.getVistaItem() == null){
+				sb.append(' ' +", ");
+			} else {
+				sb.append(obje.getVistaItem() +", ");
+			}
+		}
+		return sb.toString();
+	}
+
+	public String concatenarMarca(Marca lista) {
+		System.out.println(lista);
+		StringBuilder sb = new StringBuilder();
+		if(lista.getVistaItem() == null){
+			sb.append(' ');
+		} else {
+			sb.append(lista.getVistaItem());
+		}
+		return sb.toString();
+	}
+
+
+	public void setIUP() {
+		this.IUP = generarIUP(nombreProduct,idCateg.getIdCateg(),idMarca.getIdMarca(),idTipoProduc.getIdTipoProduc());
+	}
+
+	public String generarIUP(String nombreProduct, int idCateg, int idMarca, int idTipoProduc) {
+		Random random = new Random();
+		int randomNumber = random.nextInt(999); // genera un número aleatorio entre 0 y 999
+		String nombreProductoSinEspacios = nombreProduct.replaceAll("[^a-zA-Z0-9]", "").toUpperCase();
+		int mitad = nombreProductoSinEspacios.length() / 2;
+		char primeraLetra = nombreProductoSinEspacios.charAt(0);
+		char letraMitad = nombreProductoSinEspacios.charAt(mitad);
+		char terceraLetra = nombreProductoSinEspacios.charAt(nombreProductoSinEspacios.length() - 2);
+		char ultimaLetra = nombreProductoSinEspacios.charAt(nombreProductoSinEspacios.length() - 1);
+		String iup = primeraLetra + "-" + 'C' + idCateg + 'M' + idMarca + "TP" + idTipoProduc + letraMitad + '-' + terceraLetra + '-' + String.format("%03d", randomNumber) + '-' + ultimaLetra;
+		return iup;
+	}
+
 
 	public int getIdProduct() {
 		return idProduct;
@@ -107,8 +179,8 @@ public class Producto implements Serializable {
 		this.idCateg = idCateg;
 	}
 
-	public String getIdMarca() {
-		return concatenarMarca(idMarca);
+	public Marca getIdMarca() {
+		return idMarca;
 	}
 
 	public void setIdMarca(Marca idMarca) {
@@ -123,28 +195,12 @@ public class Producto implements Serializable {
 		this.idTipoProduc = idTipoProduc;
 	}
 
-	public String getIdEtiqueta() {
-		return concatenarEtiqueta(idEtiqueta);
+	public List<Etiquetas> getIdEtiqueta() {
+		return idEtiqueta;
 	}
 
 	public void setIdEtiqueta(List<Etiquetas> idEtiqueta) {
 		this.idEtiqueta = idEtiqueta;
-	}
-
-	public String getIdTalla() {
-		return concatenarTalla(idTalla);
-	}
-
-	public void setIdTalla(List<Talla> idTalla) {
-		this.idTalla = idTalla;
-	}
-
-	public String getIdColor() {
-		return concatenarColor(idColor);
-	}
-
-	public void setIdColor(List<Color> idColor) {
-		this.idColor = idColor;
 	}
 
 	public boolean isExistente() {
@@ -154,51 +210,4 @@ public class Producto implements Serializable {
 	public void setExistente(boolean existente) {
 		isExistente = existente;
 	}
-
-	public String concatenarTalla(List<Talla> lista) {
-		StringBuilder sb = new StringBuilder();
-		for (Talla obje : lista) {
-			if(obje.getVistaItem() == null){
-				sb.append(' ' +", ");
-			} else {
-				sb.append(obje.getVistaItem() +", ");
-			}
-		}
-		return sb.toString();
-	}
-
-	public String concatenarEtiqueta(List<Etiquetas> lista) {
-		StringBuilder sb = new StringBuilder();
-		for (Etiquetas obje : lista) {
-			if(obje.getVistaItem() == null){
-				sb.append(' ' +", ");
-			} else {
-				sb.append(obje.getVistaItem() +", ");
-			}
-		}
-		return sb.toString();
-	}
-
-	public String concatenarColor(List<Color> lista) {
-		StringBuilder sb = new StringBuilder();
-		for (Color obje : lista) {
-			if(obje.getVistaItem() == null){
-				sb.append(' ' +", ");
-			} else {
-				sb.append(obje.getVistaItem() +", ");
-			}
-		}
-		return sb.toString();
-	}
-
-	public String concatenarMarca(Marca lista) {
-		StringBuilder sb = new StringBuilder();
-		if(lista.getVistaItem() == null){
-			sb.append(' ');
-		} else {
-			sb.append(lista.getVistaItem());
-		}
-		return sb.toString();
-	}
-
 }

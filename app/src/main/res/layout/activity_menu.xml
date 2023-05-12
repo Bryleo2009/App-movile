@@ -7,46 +7,102 @@
     tools:context=".MenuActivity"
     tools:ignore="ExtraText">
 
-    <LinearLayout
-        android:layout_width="339dp"
-        android:layout_height="144dp"
-        android:background="@drawable/panel_curvo"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="350dp"
+        android:layout_height="259dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.128"
-        tools:ignore="MissingConstraints"></LinearLayout>
-
-    <LinearLayout
-        android:layout_width="400dp"
-        android:layout_height="57dp"
-        android:orientation="horizontal"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="289dp">
+        tools:layout_editor_absoluteY="7dp">
 
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/systen"
+            android:id="@+id/imageView2"
+            android:layout_width="375dp"
+            android:layout_height="105dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/panel_curvo"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="312dp" />
+            tools:layout_editor_absoluteY="116dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="386dp"
+            android:layout_height="197dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/img_hombre"
+            android:visibility="visible"
+            tools:ignore="MissingConstraints"
+            tools:layout_centerHorizontal="true"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <LinearLayout
+            android:layout_width="307dp"
+            android:layout_height="59dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/panel_blanco"
+            android:elevation="8dp"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Of System"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="normal"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="369dp"
+        android:layout_height="53dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconImageView"
+            style="?attr/iconoStyle"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_inventory_24" />
 
         <Button
-            android:layout_width="331dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/panel_curvo"
-            android:gravity="start|center_vertical"
+            android:id="@+id/btnProductos"
+            style="?attr/transparentButton"
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
             android:paddingStart="16dp"
             android:text="Texto del botón"
             android:textSize="18sp"
+            android:theme="@style/Theme.Ejer1"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="64dp"
             tools:layout_editor_absoluteY="312dp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconImageView2"
+            style="?attr/iconoStyle"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_keyboard_arrow_right_24" />
     </LinearLayout>
 
 

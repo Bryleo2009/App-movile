@@ -1,12 +1,21 @@
 package com.example.ofsystem.Model;
 
 
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Talla {
+
     private int idTalla;
+
     private String identItem;
+
     private  String nombreItem;
 
     private  String abreviItem;

@@ -1,14 +1,20 @@
 package com.example.ofsystem.Model;
 
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Color {
     private int idColor;
     private String identItem;
     private  String nombreItem;
+
     private  String abreviItem;
+
     private  String vistaItem;
 
     public int getIdColor() {
