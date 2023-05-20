@@ -12,8 +12,9 @@
 
     <color name="colorPrimary_dark">#03DAC5</color>
     <color name="colorPrimaryDark_dark">#6200EE</color>
-    <color name="colorAccent_dark">#370015</color>
+    <color name="colorAccent_dark">#6200EE</color>
     <color name="titulo_dark">#03DAC5</color>
     <color name="subtitulo_dark">@color/white</color>
     <color name="flecha_dark">#ACACAC</color>
+    <color name="negro_semitransparente">#B2000000</color>
 </resources>

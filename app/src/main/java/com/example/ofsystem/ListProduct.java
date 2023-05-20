@@ -1,5 +1,6 @@
 package com.example.ofsystem;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,13 +16,14 @@ import com.example.ofsystem.Model.Producto;
 import com.example.ofsystem.Model.ProductoFilter;
 import com.example.ofsystem.Service.ModalServiceImpl;
 import com.example.ofsystem.Service.ProductoServiceImpl;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 //tengo que implementar ambas librerias, para el click del boton y el click de la lista
 public class ListProduct extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
     //creacion de variables globales que usaré
     ListView listProduct;
-    Button btnNuevo;
+    FloatingActionButton newProduct;
     SwipeRefreshLayout swipeRefreshLayout; //recarga de pagina
     ProductoServiceImpl productService = new ProductoServiceImpl();
 
@@ -34,12 +36,11 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         listProduct = findViewById(R.id.listProductos);
-        btnNuevo = findViewById(R.id.btnNuevo);
+        newProduct = (FloatingActionButton) findViewById(R.id.accion_agregar);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
-        btnNuevo.setOnClickListener(this);
         listProduct.setOnItemClickListener(this);
-
+        newProduct.setOnClickListener(this);
 
         productService.listarProductos(listProduct);
 
@@ -74,8 +75,9 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
     //accion click del boton aun no visible para registro
     @Override
     public void onClick(View v) {
-        if (v == btnNuevo) {
-            productService.listarProductos(listProduct);
+        if(v == newProduct){
+            Intent intent = new Intent(ListProduct.this, FormProductActivity.class);
+            startActivity(intent);
         }
 
     }
