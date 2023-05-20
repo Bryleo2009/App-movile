@@ -60,6 +60,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="Of System"
+                android:textColor="@color/black"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="normal"
@@ -68,12 +69,15 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="369dp"
-        android:layout_height="53dp"
+        android:id="@+id/btnProductos"
+        android:layout_width="339dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="32dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        android:clickable="true"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -84,13 +88,14 @@
             android:src="@drawable/baseline_inventory_24" />
 
         <Button
-            android:id="@+id/btnProductos"
+            android:id="@+id/btn1"
             style="?attr/transparentButton"
-            android:layout_width="270dp"
+            android:layout_width="233dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:paddingStart="16dp"
-            android:text="Texto del botón"
+            android:text="Productos"
+            android:textColor="?attr/parrafoStyle"
             android:textSize="18sp"
             android:theme="@style/Theme.Ejer1"
             tools:ignore="MissingConstraints"
@@ -99,11 +104,53 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iconImageView2"
-            style="?attr/iconoStyle"
+            style="?attr/fechaStyle"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:src="@drawable/baseline_keyboard_arrow_right_24" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/btnClientes"
+        android:layout_width="339dp"
+        android:layout_height="47dp"
+        android:clickable="true"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnProductos"
+        app:layout_constraintVertical_bias="0.079"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconImageView3"
+            style="?attr/iconoStyle"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_assignment_ind_24" />
+
+        <Button
+            android:id="@+id/btn2"
+            style="?attr/transparentButton"
+            android:layout_width="233dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:paddingStart="16dp"
+            android:text="Clientes"
+            android:textColor="?attr/parrafoStyle"
+            android:textSize="18sp"
+            android:theme="@style/Theme.Ejer1"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="64dp"
+            tools:layout_editor_absoluteY="312dp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iconImageView4"
+            style="?attr/fechaStyle"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_keyboard_arrow_right_24" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

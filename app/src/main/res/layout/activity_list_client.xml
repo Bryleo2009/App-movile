@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListProduct">
+    tools:context=".ListClientActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -18,7 +18,6 @@
         app:titleTextAppearance="?attr/toolbarTitleTextColor"
         />
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="396dp"
@@ -30,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <ListView
-            android:id="@+id/listProductos"
+            android:id="@+id/listClientes"
             android:layout_width="0dp"
             android:layout_height="635dp"
             android:visibility="visible"
@@ -52,6 +51,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swipeRefreshLayout"
         tools:ignore="MissingConstraints" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

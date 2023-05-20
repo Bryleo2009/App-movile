@@ -8,9 +8,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ofsystem.Api.ProductoApi;
+import com.example.ofsystem.Api.ClienteApi;
 import com.example.ofsystem.Config.Config;
-import com.example.ofsystem.Model.ProductoFilter;
+import com.example.ofsystem.Model.Cliente;
 import com.example.ofsystem.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,10 +22,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProductoServiceImpl {
-    private ProductoApi ProductoApi;
+public class ClienteServiceImpl {
+    private ClienteApi ClienteApi;
 
-    public ProductoServiceImpl() {
+    public ClienteServiceImpl() {
         // Crear una instancia de Retrofit con la URL base de la API RESTful
         //se usa la red 10.0.2.2 siempre para acceder al localhost
         Retrofit retrofit = new Retrofit.Builder()
@@ -34,28 +34,26 @@ public class ProductoServiceImpl {
                 .build();
 
         // Crear una instancia de la interfaz MyApi
-        ProductoApi = retrofit.create(ProductoApi.class);
+        ClienteApi = retrofit.create(ClienteApi.class);
     }
 
-    public void listarProductos(ListView listView) {
+    public void listarClientes(ListView listView) {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
-        //realiza una llamada al metodo getProductos
-        Call<List<ProductoFilter>> call = ProductoApi.getProductos();
-        //se agrega un Callback es responsable de manejar la respuesta de la llamada cuando se recibe una respuesta del servidor.
-        call.enqueue(new Callback<List<ProductoFilter>>() {
+        Call<List<Cliente>> call = ClienteApi.getClientes();
+        call.enqueue(new Callback<List<Cliente>>() {
             @Override
-            public void onResponse(Call<List<ProductoFilter>> call, Response<List<ProductoFilter>> response) {
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
                 try {
                     if (response.isSuccessful()) {
                         System.out.println("Consumo Exitoso");
-                        List<ProductoFilter> productoFilters = response.body();
+                        List<Cliente> Clientes = response.body();
 
-                        // Crear un ArrayAdapter con los Productos obtenidos de la API RESTful
-                        ArrayAdapter<ProductoFilter> adapter = new ArrayAdapter<ProductoFilter>(
+                        // Crear un ArrayAdapter con los Clientes obtenidos de la API RESTful
+                        ArrayAdapter<Cliente> adapter = new ArrayAdapter<Cliente>(
                                 listView.getContext(),
-                                R.layout.cmp_listproduct,
-                                productoFilters
+                                R.layout.cmp_listclient,
+                                Clientes
                         ) {
                             public View getView(int position, View convertView, ViewGroup parent) {
                                 View itemView = convertView;
@@ -63,28 +61,25 @@ public class ProductoServiceImpl {
                                 try {
                                     if (itemView == null) {
                                         LayoutInflater inflater = LayoutInflater.from(getContext());
-                                        itemView = inflater.inflate(R.layout.cmp_listproduct, parent, false);
+                                        itemView = inflater.inflate(R.layout.cmp_listclient, parent, false);
                                     }
 
-                                    // Obtener el Producto actual
-                                    ProductoFilter productoFilter = getItem(position);
-                                    System.out.println("Listando ...:" + productoFilter);
+                                    // Obtener el Cliente actual
+                                    Cliente Cliente = getItem(position);
+                                    System.out.println("Listando ...:" + Cliente);
 
-                                    // Actualizar los elementos de la vista con los datos del Producto
-                                    TextView tvNombre = (TextView) itemView.findViewById(R.id.txtNombreProducto);
-                                    tvNombre.setText(productoFilter.getProducto().getNombreProduct());
+                                    // Actualizar los elementos de la vista con los datos del Cliente
+                                    TextView tvDni = (TextView) itemView.findViewById(R.id.txtDni);
+                                    tvDni.setText(Cliente.getDniCliente());
 
-                                    TextView tvNumero = (TextView) itemView.findViewById(R.id.txtPrecio);
-                                    tvNumero.setText(String.valueOf(productoFilter.getProducto().getPrecioUni()));
+                                    TextView tvCorreo = (TextView) itemView.findViewById(R.id.txtCorreoCliente);
+                                    tvCorreo.setText(String.valueOf(Cliente.getCorreoCliente()));
 
-                                    TextView tvDescripcion = (TextView) itemView.findViewById(R.id.txtDescripcion);
-                                    tvDescripcion.setText(productoFilter.getProducto().getDescripcionProduct());
+                                    TextView tvNombre = (TextView) itemView.findViewById(R.id.txtNombreCliente);
+                                    tvNombre.setText(Cliente.getNombreCliente() + " " + Cliente.getApellidoCliente());
 
-                                    TextView tvTipo = (TextView) itemView.findViewById(R.id.txtTipo);
-                                    tvTipo.setText(productoFilter.getProducto().getIdTipoProduc().getIdentItem());
-
-                                    TextView tvId = (TextView) itemView.findViewById(R.id.txtId);
-                                    tvId.setText(String.valueOf(productoFilter.getProducto().getIdProduct()));
+                                    TextView tvCelular = (TextView) itemView.findViewById(R.id.txtCelularCliente);
+                                    tvCelular.setText(Cliente.getCelularCliente());
 
                                 } catch (Exception e) {
                                     System.out.println("Error de consumo interno: " + e.getMessage());
@@ -111,7 +106,7 @@ public class ProductoServiceImpl {
             }
 
             @Override
-            public void onFailure(Call<List<ProductoFilter>> call, Throwable t) {
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
                 System.out.println("Error al procesar la solicitud: " + t.getMessage());
                 // Mostrar la alerta flotante
                 Snackbar.make(listView, "Error al procesar la solicitud: " + t.getMessage(), Snackbar.LENGTH_SHORT).show();

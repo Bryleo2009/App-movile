@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtDni"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingLeft="15dp"
+        android:text="DNI"
+        android:textAllCaps="true"
+        android:textAppearance="?attr/tituloStyle"
+        android:textStyle="bold"
+        android:theme="@style/Theme.Ejer1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtNombreCliente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Nombre Cliente"
+        android:textAppearance="?attr/SubtituloStyle"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:theme="@style/Theme.Ejer1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDni" />
+
+    <TextView
+        android:id="@+id/txtCelularCliente"
+        android:layout_width="137dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
+        android:text="+51 994 271 287"
+        android:textSize="12dp"
+        android:theme="@style/Theme.Ejer1"
+        app:layout_constraintEnd_toStartOf="@+id/txtCorreoCliente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreCliente" />
+
+    <TextView
+        android:id="@+id/txtCorreoCliente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        android:text="bryleo2009@hotmail.com"
+        android:textAlignment="textEnd"
+        android:textSize="12dp"
+        android:theme="@style/Theme.Ejer1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtCelularCliente"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreCliente" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

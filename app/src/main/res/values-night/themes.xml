@@ -15,6 +15,9 @@
         <!-- Establece el color del título en el modo oscuro -->
         <item name="toolbarTitleTextColor">@style/toolbarTitleTextColor_dark</item>
         <item name="iconoStyle">@style/Icono.Nocturno</item>
+        <item name="transparentButton">@style/transparentButton</item>
+        <item name="parrafoStyle">@color/white</item>
+        <item name="fechaStyle">@style/Icono.flecha</item>
     </style>
 
 
@@ -32,7 +35,9 @@
     <style name="Icono.Nocturno">
         <item name="android:tint">@color/colorPrimary_dark</item>
     </style>
-
+    <style name="Icono.flecha">
+        <item name="android:tint">@color/flecha_dark</item>
+    </style>
 
 
     <style name="Theme.Ejer1" parent="Base.Theme.Ejer1" />

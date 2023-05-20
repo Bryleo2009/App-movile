@@ -1,5 +1,10 @@
 package com.example.ofsystem;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -7,41 +12,35 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.example.ofsystem.Model.Producto;
 import com.example.ofsystem.Model.ProductoFilter;
+import com.example.ofsystem.Service.ClienteServiceImpl;
 import com.example.ofsystem.Service.ModalServiceImpl;
 import com.example.ofsystem.Service.ProductoServiceImpl;
 
-//tengo que implementar ambas librerias, para el click del boton y el click de la lista
-public class ListProduct extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
+public class ListClientActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
-    //creacion de variables globales que usaré
-    ListView listProduct;
+    ListView listCliente;
     Button btnNuevo;
     SwipeRefreshLayout swipeRefreshLayout; //recarga de pagina
-    ProductoServiceImpl productService = new ProductoServiceImpl();
-
+    ClienteServiceImpl clienteService = new ClienteServiceImpl();
+    
+    
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_product);
-
-
+        setContentView(R.layout.activity_list_client);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        listProduct = findViewById(R.id.listProductos);
+        listCliente = findViewById(R.id.listClientes);
         btnNuevo = findViewById(R.id.btnNuevo);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         btnNuevo.setOnClickListener(this);
-        listProduct.setOnItemClickListener(this);
+        listCliente.setOnItemClickListener(this);
 
-
-        productService.listarProductos(listProduct);
+        clienteService.listarClientes(null);
+        clienteService.listarClientes(listCliente);
 
         //activacion del toolbar
         setSupportActionBar(toolbar);
@@ -51,13 +50,12 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                productService.listarProductos(listProduct);
+                clienteService.listarClientes(listCliente);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
-    //me regresa a la vista home, necesita implementacion de import android.view.MenuItem;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -71,11 +69,11 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    //accion click del boton aun no visible para registro
+    //accion click del boton
     @Override
     public void onClick(View v) {
         if (v == btnNuevo) {
-            productService.listarProductos(listProduct);
+            clienteService.listarClientes(listCliente);
         }
 
     }
@@ -83,21 +81,20 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
     //accion click de la lista
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (parent == listProduct) {
-
-            // Obtener el objeto Producto de la posición seleccionada
-            ProductoFilter seleccion = (ProductoFilter) parent.getItemAtPosition(position);
-
-            // Imprimir la información del objeto en la consola
-            System.out.println("Prodcuto seleccionado: " + seleccion.toString());
-
-            // Crear una instancia del diálogo y pasarle los datos
-            ModalServiceImpl dialog = ModalServiceImpl.newInstance(seleccion);
-
-            // Mostrar el diálogo
-            dialog.show(getSupportFragmentManager(), "my_dialog");
-
-        }
+//        if (parent == listCliente) {
+//
+//            // Obtener el objeto Producto de la posición seleccionada
+//            ProductoFilter seleccion = (ProductoFilter) parent.getItemAtPosition(position);
+//
+//            // Imprimir la información del objeto en la consola
+//            System.out.println("Prodcuto seleccionado: " + seleccion.toString());
+//
+//            // Crear una instancia del diálogo y pasarle los datos
+//            ModalServiceImpl dialog = ModalServiceImpl.newInstance(seleccion);
+//
+//            // Mostrar el diálogo
+//            dialog.show(getSupportFragmentManager(), "my_dialog");
+//
+//        }
     }
-
 }

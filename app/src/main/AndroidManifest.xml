@@ -17,6 +17,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ListClientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListProduct"
+            android:exported="false" />
+        <activity
+            android:name=".MenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -26,9 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ListProduct"
-            android:exported="false" />
+
 
         <meta-data
             android:name="com.example.app.DEVELOPER_NAME"

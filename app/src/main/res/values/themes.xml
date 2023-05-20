@@ -5,6 +5,8 @@
     <attr name="toolbarTitleTextColor" format="reference" />
     <attr name="iconoStyle" format="reference" />
     <attr name="transparentButton" format="reference" />
+    <attr name="parrafoStyle" format="reference" />
+    <attr name="fechaStyle" format="reference" />
 
     <!--Esquema Base-->
     <style name="Theme.Ejer1" parent="Theme.Material3.Light.NoActionBar">
@@ -22,6 +24,8 @@
         <item name="toolbarTitleTextColor">@style/toolbarTitleTextColor_ligth</item>
         <item name="iconoStyle">@style/Icono.Claro</item>
         <item name="transparentButton">@style/transparentButton</item>
+        <item name="parrafoStyle">@color/black</item>
+        <item name="fechaStyle">@style/Icono.flecha</item>
     </style>
 
     <!--    Estilo general Texto-->
@@ -53,6 +57,9 @@
     </style>
     <style name="Icono.Claro">
         <item name="android:tint">@color/colorPrimary_light</item>
+    </style>
+    <style name="Icono.flecha">
+        <item name="android:tint">@color/flecha_lithg</item>
     </style>
     <style name="transparentButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:gravity">start|center_vertical</item>

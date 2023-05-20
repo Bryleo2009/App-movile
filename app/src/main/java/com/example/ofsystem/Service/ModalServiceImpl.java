@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.ofsystem.Config.Config;
 import com.example.ofsystem.Model.Producto;
+import com.example.ofsystem.Model.ProductoFilter;
 import com.example.ofsystem.R;
 import com.squareup.picasso.Picasso;
 
@@ -22,7 +23,7 @@ public class ModalServiceImpl extends DialogFragment {
 
     private Serializable mData;
 
-    public static ModalServiceImpl newInstance(Producto data) {
+    public static ModalServiceImpl newInstance(ProductoFilter data) {
         ModalServiceImpl fragment = new ModalServiceImpl();
         Bundle args = new Bundle();
         args.putSerializable("data", data);
@@ -52,28 +53,33 @@ public class ModalServiceImpl extends DialogFragment {
             TextView txtTP = (TextView) view.findViewById(R.id.txtTipo2);
             TextView txtPrecio = (TextView) view.findViewById(R.id.txtPrecio2);
             TextView txtDesc = (TextView) view.findViewById(R.id.txtDescripcion2);
-            //TextView txtTalla = (TextView) view.findViewById(R.id.txtTalla);
+            TextView txtTalla = (TextView) view.findViewById(R.id.txtTalla);
             TextView txtEtiquet = (TextView) view.findViewById(R.id.txtEtiqueta);
             TextView txtMarcas = (TextView) view.findViewById(R.id.txtMarca);
             TextView txtIUP = (TextView) view.findViewById(R.id.txtIUP);
-            //TextView txtColor = (TextView) view.findViewById(R.id.txtColor);
+            TextView txtColor = (TextView) view.findViewById(R.id.txtColor);
 
-            txtNombre.setText(((Producto) mData).getNombreProduct());
-            txtTP.setText(((Producto) mData).getIdTipoProduc().getVistaItem());
-            txtPrecio.setText(String.valueOf(((Producto) mData).getPrecioUni()));
-            txtDesc.setText(((Producto) mData).getDescripcionProduct());
-            //txtTalla.setText(((Producto) mData).get());
-            txtEtiquet.setText(((Producto) mData).concatenarEtiqueta(((Producto) mData).getIdEtiqueta()));
-            txtMarcas.setText(((Producto) mData).concatenarMarca(((Producto) mData).getIdMarca()));
-            txtIUP.setText(((Producto) mData).getIUP());
-            //txtColor.setText(((Producto) mData).getIdColor().toString());
+            txtNombre.setText(((ProductoFilter) mData).getProducto().getNombreProduct());
+            txtTP.setText(((ProductoFilter) mData).getProducto().getIdTipoProduc().getVistaItem());
+            if(((ProductoFilter) mData).getProducto().isPrecioDescProduct()){
+                txtPrecio.setText(String.valueOf(((ProductoFilter) mData).getProducto().getPrecioDescuProduct()));
+            } else {
+                txtPrecio.setText(String.valueOf(((ProductoFilter) mData).getProducto().getPrecioUni()));
+            }
+            txtPrecio.setText(String.valueOf(((ProductoFilter) mData).getProducto().getPrecioUni()));
+            txtDesc.setText(((ProductoFilter) mData).getProducto().getDescripcionProduct());
+            txtTalla.setText(((ProductoFilter) mData).getTallas());
+            txtEtiquet.setText(((ProductoFilter) mData).getProducto().concatenarEtiqueta(((ProductoFilter) mData).getProducto().getIdEtiqueta()));
+            txtMarcas.setText(((ProductoFilter) mData).getProducto().concatenarMarca(((ProductoFilter) mData).getProducto().getIdMarca()));
+            txtIUP.setText(((ProductoFilter) mData).getProducto().getIUP());
+            txtColor.setText(((ProductoFilter) mData).getColors());
 
             ImageView imageView = view.findViewById(R.id.imgQr); // Reemplaza R.id.imageView con el ID de tu vista ImageView
 
             try {
                 //Picasso.get().load(Config.BASE_URL + "/media/productosQr/" + ((Producto) mData).getIUP() + ".png").into(imageView);
 
-                Picasso.get().load(((Producto) mData).getImagen()).into(imageView);
+                Picasso.get().load(((ProductoFilter) mData).getProducto().getImagen()).into(imageView);
                 System.out.println("Imagen cargada correctamente");
             } catch (Exception e) {
                 System.out.println("Error al cargar la imagen: " + e.getMessage());

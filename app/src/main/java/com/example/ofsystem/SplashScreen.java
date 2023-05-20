@@ -18,7 +18,7 @@ public class SplashScreen extends AppCompatActivity {
             //que espere 3 segundos y me envie a MainActiviry
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, ListProduct.class);
+                Intent intent = new Intent(SplashScreen.this, MenuActivity.class);
                 startActivity(intent);
             }
         },3000);
