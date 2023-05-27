@@ -55,6 +55,7 @@ public class ClienteServiceImpl {
                                 R.layout.cmp_listclient,
                                 Clientes
                         ) {
+                            //recorrido de un objeto para asignar a un nuevo adaptador
                             public View getView(int position, View convertView, ViewGroup parent) {
                                 View itemView = convertView;
 

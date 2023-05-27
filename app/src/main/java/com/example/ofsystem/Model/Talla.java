@@ -61,6 +61,10 @@ public class Talla {
     public void setVistaItem(String vistaItem) {
         this.vistaItem = vistaItem;
     }
+
+    public Talla(int idTalla) {
+        this.idTalla = idTalla;
+    }
 }
 
 

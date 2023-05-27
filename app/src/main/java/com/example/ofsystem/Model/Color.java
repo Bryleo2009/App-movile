@@ -56,4 +56,8 @@ public class Color {
     public void setVistaItem(String vistaItem) {
         this.vistaItem = vistaItem;
     }
+
+    public Color(int idColor) {
+        this.idColor = idColor;
+    }
 }

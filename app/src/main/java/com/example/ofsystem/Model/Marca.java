@@ -56,4 +56,8 @@ public class Marca {
     public void setVistaItem(String vistaItem) {
         this.vistaItem = vistaItem;
     }
+
+    public Marca(int idMarca) {
+        this.idMarca = idMarca;
+    }
 }

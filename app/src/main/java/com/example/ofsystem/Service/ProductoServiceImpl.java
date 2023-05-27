@@ -1,5 +1,9 @@
 package com.example.ofsystem.Service;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +12,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.ofsystem.Api.ProductoApi;
 import com.example.ofsystem.Config.Config;
+import com.example.ofsystem.FormProductActivity;
+import com.example.ofsystem.ListClientActivity;
+import com.example.ofsystem.ListProduct;
+import com.example.ofsystem.MenuActivity;
+import com.example.ofsystem.Model.Producto;
 import com.example.ofsystem.Model.ProductoFilter;
+import com.example.ofsystem.Model.RegistroProductFilter;
 import com.example.ofsystem.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -118,5 +131,58 @@ public class ProductoServiceImpl {
             }
         });
 
+    }
+
+    public void crearProductos(Context context, RegistroProductFilter producto, View v) {
+        Call<Void> call = ProductoApi.createProduct(producto);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        System.out.println("Creacion de Producto Exitoso");
+                        MaterialAlertDialogBuilder materialDialogBuilder = new MaterialAlertDialogBuilder(v.getContext())
+                                .setTitle("Producto Registrado")
+                                .setMessage("Este producto ha sido creado con éxito")
+                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Acciones a realizar al hacer clic en Aceptar
+                                        Intent intent = new Intent(context, ListProduct.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // Agrega esta línea si estás llamando desde una clase sin actividad
+                                        context.startActivity(intent);
+                                    }
+                                });
+
+                        materialDialogBuilder.show();
+                    } else {
+                        // Hubo un error al crear el producto
+                        System.out.println("Consumo NO Exitoso " + response.message());
+                        MaterialAlertDialogBuilder materialDialogBuilder = new MaterialAlertDialogBuilder(v.getContext())
+                                .setTitle("Producto NO Registrado")
+                                .setMessage("Este producto no ha sido creado, posiblemente ya se encuentra uno similar en la base de datos")
+                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Acciones a realizar al hacer clic en Aceptar
+
+                                    }
+                                });
+
+                        materialDialogBuilder.show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Hubo un error de conexión u otro tipo de error
+                System.out.println("Error al procesar la solicitud: " + t.getMessage());
+                // Mostrar la alerta flotante
+                //Snackbar.make(listView, "Error al procesar la solicitud: " + t.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -28,7 +28,7 @@ public class Producto implements Serializable {
 	public Categoria idCateg;
 	public Marca idMarca;
 	public TipoProducto idTipoProduc;
-	public List<Etiquetas> idEtiqueta;
+	public List<Etiqueta> idEtiqueta;
 
 	public boolean isExistente;
 
@@ -45,9 +45,9 @@ public class Producto implements Serializable {
 		return sb.toString();
 	}
 
-	public String concatenarEtiqueta(List<Etiquetas> lista) {
+	public String concatenarEtiqueta(List<Etiqueta> lista) {
 		StringBuilder sb = new StringBuilder();
-		for (Etiquetas obje : lista) {
+		for (Etiqueta obje : lista) {
 			if(obje.getVistaItem() == null){
 				sb.append(' ' +", ");
 			} else {
@@ -195,11 +195,11 @@ public class Producto implements Serializable {
 		this.idTipoProduc = idTipoProduc;
 	}
 
-	public List<Etiquetas> getIdEtiqueta() {
+	public List<Etiqueta> getIdEtiqueta() {
 		return idEtiqueta;
 	}
 
-	public void setIdEtiqueta(List<Etiquetas> idEtiqueta) {
+	public void setIdEtiqueta(List<Etiqueta> idEtiqueta) {
 		this.idEtiqueta = idEtiqueta;
 	}
 

@@ -57,4 +57,8 @@ public class Categoria {
     public void setVistaItem(String vistaItem) {
         this.vistaItem = vistaItem;
     }
+
+    public Categoria(int idCateg) {
+        this.idCateg = idCateg;
+    }
 }

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Etiquetas {
+public class Etiqueta {
     private int idEtiqueta;
 
     private String identItem;
@@ -57,6 +57,10 @@ public class Etiquetas {
 
     public void setVistaItem(String vistaItem) {
         this.vistaItem = vistaItem;
+    }
+
+    public Etiqueta(int idEtiqueta) {
+        this.idEtiqueta = idEtiqueta;
     }
 }
 

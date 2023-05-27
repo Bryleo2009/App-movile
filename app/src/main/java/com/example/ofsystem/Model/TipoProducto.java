@@ -62,4 +62,8 @@ public class TipoProducto {
     public void setVistaItem(String vistaItem) {
         this.vistaItem = vistaItem;
     }
+
+    public TipoProducto(int idTipoProduc) {
+        this.idTipoProduc = idTipoProduc;
+    }
 }

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ofsystem.Model.Cliente;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener{
@@ -37,6 +38,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v == btnProductos || v == bt1) {
             Intent intent = new Intent(MenuActivity.this, ListProduct.class);
+            startActivity(intent);
+        }
+        if (v == btnClientes || v == bt2) {
+            Intent intent = new Intent(MenuActivity.this, ListClientActivity.class);
             startActivity(intent);
         }
     }

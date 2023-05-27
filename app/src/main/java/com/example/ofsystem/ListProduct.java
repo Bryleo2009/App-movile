@@ -65,6 +65,8 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
         if (id == android.R.id.home) {
             // Acción que deseas realizar al hacer clic en la flecha de navegación
             // Por ejemplo, puedes finalizar la actividad actual y regresar a la anterior
+            Intent intent = new Intent(this, MenuActivity.class);
+            startActivity(intent);
             finish();
             return true;
         }
