@@ -198,7 +198,7 @@ public class ProductoServiceImpl {
         });
     }
 
-    public void listarProductos(Context context) {
+    public void editarProductos(Context context) {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
         Call<List<ProductoFilter>> call = ProductoApi.getProductos();
@@ -224,7 +224,7 @@ public class ProductoServiceImpl {
 
                         // Crear el diálogo
                         MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
-                        dialogBuilder.setTitle("Seleccionar producto");
+                        dialogBuilder.setTitle("Seleccionar producto para editar");
 
                         // Crear el Spinner y configurarlo con el ArrayAdapter
                         final Spinner spinner = new Spinner(context);
@@ -247,6 +247,129 @@ public class ProductoServiceImpl {
                                         System.out.println("seleccionado: " + producto);
                                         intent.putExtra("Item",producto);
                                         context.startActivity(intent);
+                                    }
+                                }
+                            }
+                        });
+
+                        // Configurar el botón "Cancel"
+                        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Acciones a realizar al hacer clic en "Cancel"
+                                // Por ejemplo, cerrar el diálogo sin hacer nada
+                                dialog.dismiss();
+                            }
+                        });
+
+                        // Mostrar el diálogo
+                        dialogBuilder.show();
+                    } else {
+                        System.out.println("Consumo NO Exitoso " + response.message());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductoFilter>> call, Throwable t) {
+                System.out.println("Error al procesar la solicitud: " + t.getMessage());
+
+            }
+        });
+    }
+
+    public void eliminarProdcutos(Context context){
+        System.out.println("Enviando solicitud HTTP...");
+        Call<List<ProductoFilter>> call = ProductoApi.getProductos();
+        call.enqueue(new Callback<List<ProductoFilter>>() {
+            @Override
+            public void onResponse(Call<List<ProductoFilter>> call, Response<List<ProductoFilter>> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        System.out.println("Consumo Exitoso");
+                        List<ProductoFilter> productoFilters = response.body();
+                        // Procesamiento de la respuesta
+
+
+                        List<String> list = new ArrayList<>();
+
+                        for (ProductoFilter productoFilter: productoFilters){
+                            list.add(productoFilter.getProducto().getIUP() + " | " + productoFilter.getProducto().getNombreProduct());
+                        }
+
+                        // Crear un ArrayAdapter con los nombres de los productos
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, list);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        // Crear el diálogo
+                        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
+                        dialogBuilder.setTitle("Seleccionar producto para eliminar");
+
+                        // Crear el Spinner y configurarlo con el ArrayAdapter
+                        final Spinner spinner = new Spinner(context);
+                        spinner.setAdapter(adapter);
+                        dialogBuilder.setView(spinner);
+
+                        // Configurar el botón "Next"
+                        dialogBuilder.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Acciones a realizar al hacer clic en "Next"
+                                String selectedProduct = (String) spinner.getSelectedItem();
+                                // Realizar alguna acción con el producto seleccionado
+
+
+                                for (ProductoFilter producto: objeto){
+                                    if(selectedProduct.equals(producto.getProducto().getIUP() + " | " + producto.getProducto().getNombreProduct())){
+                                        // Navegar a otra vista (reemplaza con la actividad de destino)
+                                        Call<Void> call = ProductoApi.eliminarProducto(producto.getProducto().getIdProduct());
+                                        call.enqueue(new Callback<Void>() {
+                                            @Override
+                                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                                if (response.isSuccessful()) {
+                                                    MaterialAlertDialogBuilder materialDialogBuilder = new MaterialAlertDialogBuilder(context)
+                                                            .setTitle("Producto Eliminado")
+                                                            .setMessage("Este producto ha sido eliminado con éxito")
+                                                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    // Acciones a realizar al hacer clic en Aceptar
+                                                                    Intent intent = new Intent(context, ListProduct.class);
+                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // Agrega esta línea si estás llamando desde una clase sin actividad
+                                                                    context.startActivity(intent);
+                                                                }
+                                                            });
+
+                                                    materialDialogBuilder.show();
+                                                    System.out.println("Eliminacion de Producto Exitoso");
+                                                } else {
+                                                    MaterialAlertDialogBuilder materialDialogBuilder = new MaterialAlertDialogBuilder(context)
+                                                            .setTitle("Producto NO Eliminado")
+                                                            .setMessage("Este producto no ha sido eliminado")
+                                                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    // Acciones a realizar al hacer clic en Aceptar
+
+                                                                }
+                                                            });
+
+                                                    materialDialogBuilder.show();
+                                                    System.out.println("Eliminacion de Producto no Exitoso");
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Void> call, Throwable t) {
+                                                // Error de red u otro tipo de error
+                                                // Maneja el error de acuerdo a tus necesidades
+                                                System.out.println("Consumo NO Exitoso " + response.message());
+                                            }
+                                        });
+
+
                                     }
                                 }
                             }

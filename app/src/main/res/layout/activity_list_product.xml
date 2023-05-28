@@ -54,6 +54,15 @@
         fab:fab_labelsPosition="left">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/accion_eliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_icon="@drawable/baseline_delete_24"
+            fab:fab_size="mini"
+            fab:fab_title="Eliminar" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/accion_editar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

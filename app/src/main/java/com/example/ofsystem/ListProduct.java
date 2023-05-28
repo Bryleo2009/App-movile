@@ -38,7 +38,7 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
 
     //creacion de variables globales que usaré
     ListView listProduct;
-    FloatingActionButton newProduct, edictProduct;
+    FloatingActionButton newProduct, edictProduct, eliminarProduct;
     SwipeRefreshLayout swipeRefreshLayout; //recarga de pagina
     ProductoServiceImpl productService = new ProductoServiceImpl();
 
@@ -51,11 +51,13 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
         listProduct = findViewById(R.id.listProductos);
         newProduct = (FloatingActionButton) findViewById(R.id.accion_agregar);
         edictProduct = (FloatingActionButton) findViewById(R.id.accion_editar);
+        eliminarProduct = (FloatingActionButton) findViewById(R.id.accion_eliminar);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         listProduct.setOnItemClickListener(this);
         newProduct.setOnClickListener(this);
         edictProduct.setOnClickListener(this);
+        eliminarProduct.setOnClickListener(this);
 
         productService.listarProductos(listProduct);
 
@@ -100,7 +102,11 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
         }
         if (v == edictProduct) {
             Context context = this;
-            productService.listarProductos(this);
+            productService.editarProductos(this);
+        }
+        if (v == eliminarProduct) {
+            Context context = this;
+            productService.eliminarProdcutos(this);
         }
     }
 
