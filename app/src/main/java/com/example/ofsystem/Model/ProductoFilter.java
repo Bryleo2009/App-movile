@@ -28,12 +28,20 @@ public class ProductoFilter implements Serializable {
         return concatenarTalla(tallas);
     }
 
+    public List<Talla> getTallas2() {
+        return tallas;
+    }
+
     public void setTallas(List<Talla> tallas) {
         tallas = tallas;
     }
 
     public String getColors() {
         return concatenarColor(colors);
+    }
+
+    public List<Color> getColors2() {
+        return colors;
     }
 
     public void setColors(List<Color> colors) {

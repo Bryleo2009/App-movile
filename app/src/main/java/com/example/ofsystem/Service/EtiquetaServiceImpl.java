@@ -42,7 +42,7 @@ public class EtiquetaServiceImpl {
         EtiquetaApi = retrofit.create(EtiquetaApi.class);
     }
 
-    public void listarEtiquetas(LinearLayout layout) {
+    public void listarEtiquetas(LinearLayout layout, List<Etiqueta> obj) {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
         this.layout = layout;
@@ -57,11 +57,21 @@ public class EtiquetaServiceImpl {
                         etiquetas = response.body();
 
                         // Itera sobre el array de etiquetas y crea un checkbox por cada una
-                        for (Etiqueta etiqueta  : Etiquetas) {
+                        for (Etiqueta etiqueta : Etiquetas) {
                             CheckBox checkBox = new CheckBox(layout.getContext());
                             checkBox.setText(etiqueta.getVistaItem());
                             layout.addView(checkBox);
+
+                            if (obj != null) {
+                                for (Etiqueta objEtiqueta : obj) {
+                                    if (objEtiqueta.getIdEtiqueta() == etiqueta.getIdEtiqueta()) {
+                                        checkBox.setChecked(true);
+                                        break; // Si encontramos una coincidencia, salimos del bucle interno
+                                    }
+                                }
+                            }
                         }
+
                     } else {
                         System.out.println("Consumo NO Exitoso " + response.message());
                     }

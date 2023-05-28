@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class RegistroProductFilter {
+public class RegistroProductFilter implements Serializable {
     private Producto producto;
     private List<TallaColorFilter> tallaColorFilters;
 

@@ -1,13 +1,15 @@
 package com.example.ofsystem.Model;
 
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
 @Data
 @AllArgsConstructor
-public class ProductoTallaColor {
+public class ProductoTallaColor implements Serializable {
 
     private int idProductoTallaColor;
 

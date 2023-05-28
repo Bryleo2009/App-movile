@@ -36,7 +36,7 @@ public class MarcaServiceImpl implements AdapterView.OnItemSelectedListener {
         MarcaApi = retrofit.create(MarcaApi.class);
     }
 
-    public void listarMarcas(Spinner spinner) {
+    public void listarMarcas(Spinner spinner, Marca obj) {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
         this.spinner = spinner; //cojo el valor para usarlo posteriormente
@@ -59,8 +59,13 @@ public class MarcaServiceImpl implements AdapterView.OnItemSelectedListener {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, cateList);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner.setAdapter(adapter);
-
-                        
+                        if (obj != null) {
+                            for (int i = 0; i< marcas.size(); i++){
+                                if(obj.getIdMarca() == marcas.get(i).getIdMarca()){
+                                    spinner.setSelection(i);
+                                }
+                            }
+                        }
                     } else {
                         System.out.println("Consumo NO Exitoso " + response.message());
                     }

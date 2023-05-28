@@ -1,29 +1,44 @@
 package com.example.ofsystem;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.ofsystem.Api.ProductoApi;
+import com.example.ofsystem.Model.Color;
 import com.example.ofsystem.Model.Producto;
 import com.example.ofsystem.Model.ProductoFilter;
 import com.example.ofsystem.Service.ModalServiceImpl;
 import com.example.ofsystem.Service.ProductoServiceImpl;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 //tengo que implementar ambas librerias, para el click del boton y el click de la lista
 public class ListProduct extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
     //creacion de variables globales que usaré
     ListView listProduct;
-    FloatingActionButton newProduct;
+    FloatingActionButton newProduct, edictProduct;
     SwipeRefreshLayout swipeRefreshLayout; //recarga de pagina
     ProductoServiceImpl productService = new ProductoServiceImpl();
 
@@ -32,15 +47,15 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_product);
 
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         listProduct = findViewById(R.id.listProductos);
         newProduct = (FloatingActionButton) findViewById(R.id.accion_agregar);
+        edictProduct = (FloatingActionButton) findViewById(R.id.accion_editar);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         listProduct.setOnItemClickListener(this);
         newProduct.setOnClickListener(this);
+        edictProduct.setOnClickListener(this);
 
         productService.listarProductos(listProduct);
 
@@ -74,6 +89,8 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
     }
 
 
+
+
     //accion click del boton aun no visible para registro
     @Override
     public void onClick(View v) {
@@ -81,7 +98,10 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
             Intent intent = new Intent(ListProduct.this, FormProductActivity.class);
             startActivity(intent);
         }
-
+        if (v == edictProduct) {
+            Context context = this;
+            productService.listarProductos(this);
+        }
     }
 
     //accion click de la lista

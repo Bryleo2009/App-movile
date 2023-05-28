@@ -36,7 +36,7 @@ public class TipoProductoServiceImpl implements AdapterView.OnItemSelectedListen
         TipoProductoApi = retrofit.create(TipoProductoApi.class);
     }
 
-    public void listarTipoProductos(Spinner spinner) {
+    public void listarTipoProductos(Spinner spinner, TipoProducto obj) {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
         this.spinner = spinner; //cojo el valor para usarlo posteriormente
@@ -59,7 +59,13 @@ public class TipoProductoServiceImpl implements AdapterView.OnItemSelectedListen
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, cateList);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner.setAdapter(adapter);
-
+                        if (obj != null) {
+                            for (int i = 0; i< TipoProductos.size(); i++){
+                                if(obj.getIdTipoProduc() == TipoProductos.get(i).getIdTipoProduc()){
+                                    spinner.setSelection(i);
+                                }
+                            }
+                        }
                         
                     } else {
                         System.out.println("Consumo NO Exitoso " + response.message());

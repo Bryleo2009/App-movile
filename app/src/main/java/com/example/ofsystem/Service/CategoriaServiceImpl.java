@@ -35,7 +35,7 @@ public class CategoriaServiceImpl implements AdapterView.OnItemSelectedListener 
         CategoriaApi = retrofit.create(CategoriaApi.class);
     }
 
-    public void listarCategorias(Spinner spinner) {
+    public void listarCategorias(Spinner spinner, Categoria obj) {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
         this.spinner = spinner; //cojo el valor para usarlo posteriormente
@@ -46,7 +46,7 @@ public class CategoriaServiceImpl implements AdapterView.OnItemSelectedListener 
             public void onResponse(Call<List<Categoria>> call, Response<List<Categoria>> response) {
                 try {
                     if (response.isSuccessful()) {
-                        System.out.println("Consumo Exitoso");
+                        System.out.println("Consumo Catego Exitoso");
                         List<Categoria> Categorias = response.body();
                         categorias = response.body();
 
@@ -59,7 +59,13 @@ public class CategoriaServiceImpl implements AdapterView.OnItemSelectedListener 
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, cateList);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner.setAdapter(adapter);
-                        
+                        if (obj != null) {
+                            for (int i = 0; i< categorias.size(); i++){
+                                if(obj.getIdCateg() == categorias.get(i).getIdCateg()){
+                                    spinner.setSelection(i);
+                                }
+                            }
+                        }
                     } else {
                         System.out.println("Consumo NO Exitoso " + response.message());
                     }
@@ -74,6 +80,7 @@ public class CategoriaServiceImpl implements AdapterView.OnItemSelectedListener 
             }
         });
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -95,5 +102,7 @@ public class CategoriaServiceImpl implements AdapterView.OnItemSelectedListener 
         }
         return 0;
     }
+
+
 
 }

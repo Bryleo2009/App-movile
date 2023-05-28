@@ -9,6 +9,7 @@ import com.example.ofsystem.Api.ColorApi;
 import com.example.ofsystem.Config.Config;
 import com.example.ofsystem.Model.Categoria;
 import com.example.ofsystem.Model.Color;
+import com.example.ofsystem.Model.Talla;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ColorServiceImpl implements AdapterView.OnItemSelectedListener {
     private ColorApi ColorApi;
     private Spinner spinner;
-    private List<Color> colors = new ArrayList<>();
+    private List<Color> objeto = new ArrayList<>();
 
     public ColorServiceImpl() {
         // Crear una instancia de Retrofit con la URL base de la API RESTful
@@ -36,7 +37,7 @@ public class ColorServiceImpl implements AdapterView.OnItemSelectedListener {
         ColorApi = retrofit.create(ColorApi.class);
     }
 
-    public void listarColors(Spinner spinner) {
+    public void listarColors(Spinner spinner, List<Color> obj) {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
         this.spinner = spinner; //cojo el valor para usarlo posteriormente
@@ -49,7 +50,7 @@ public class ColorServiceImpl implements AdapterView.OnItemSelectedListener {
                     if (response.isSuccessful()) {
                         System.out.println("Consumo Exitoso");
                         List<Color> Colors = response.body();
-                        colors = response.body();
+                        objeto = response.body();
                         // Procesamiento de la respuesta
                         for (Color Color: Colors){
                             cateList.add(Color.getVistaItem());
@@ -59,7 +60,15 @@ public class ColorServiceImpl implements AdapterView.OnItemSelectedListener {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, cateList);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner.setAdapter(adapter);
-
+                        if (obj != null) {
+                            for (int i = 0; i< objeto.size(); i++){
+                                for (Color color: obj){
+                                    if(color.getIdColor() == objeto.get(i).getIdColor()){
+                                        spinner.setSelection(i);
+                                    }
+                                }
+                            }
+                        }
                         
                     } else {
                         System.out.println("Consumo NO Exitoso " + response.message());
@@ -90,7 +99,7 @@ public class ColorServiceImpl implements AdapterView.OnItemSelectedListener {
     public int obtenerElementoSeleccionado() {
         int position = spinner.getSelectedItemPosition();
         String selectedValue = spinner.getItemAtPosition(position).toString();
-        for (Color color: colors){
+        for (Color color: objeto){
             if(selectedValue.equals(color.getVistaItem())){
                 return color.getIdColor();
             }

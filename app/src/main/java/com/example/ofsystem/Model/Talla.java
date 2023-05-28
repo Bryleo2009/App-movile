@@ -2,6 +2,8 @@ package com.example.ofsystem.Model;
 
 
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Talla {
+public class Talla implements Serializable {
 
     private int idTalla;
 

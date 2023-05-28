@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.example.ofsystem.FormProductActivity;
 import com.example.ofsystem.ListClientActivity;
 import com.example.ofsystem.ListProduct;
 import com.example.ofsystem.MenuActivity;
+import com.example.ofsystem.Model.Color;
 import com.example.ofsystem.Model.Producto;
 import com.example.ofsystem.Model.ProductoFilter;
 import com.example.ofsystem.Model.RegistroProductFilter;
@@ -27,6 +29,7 @@ import com.example.ofsystem.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,6 +40,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductoServiceImpl {
     private ProductoApi ProductoApi;
+    private Spinner spinner;
+    private List<ProductoFilter> objeto = new ArrayList<>();
 
     public ProductoServiceImpl() {
         // Crear una instancia de Retrofit con la URL base de la API RESTful
@@ -63,7 +68,7 @@ public class ProductoServiceImpl {
                     if (response.isSuccessful()) {
                         System.out.println("Consumo Exitoso");
                         List<ProductoFilter> productoFilters = response.body();
-
+                        objeto = response.body();
                         // Crear un ArrayAdapter con los Productos obtenidos de la API RESTful
                         ArrayAdapter<ProductoFilter> adapter = new ArrayAdapter<ProductoFilter>(
                                 listView.getContext(),
@@ -133,8 +138,15 @@ public class ProductoServiceImpl {
 
     }
 
-    public void crearProductos(Context context, RegistroProductFilter producto, View v) {
-        Call<Void> call = ProductoApi.createProduct(producto);
+    public void crearProductos(Context context, RegistroProductFilter producto, View v, boolean edit) {
+        Call<Void> call;
+
+        if(!edit){
+            call = ProductoApi.createProduct(producto);
+        } else {
+            call = ProductoApi.modificareProduct(producto);
+        }
+
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -184,5 +196,98 @@ public class ProductoServiceImpl {
                 //Snackbar.make(listView, "Error al procesar la solicitud: " + t.getMessage(), Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void listarProductos(Context context) {
+        // Consumir el endpoint de la API RESTful usando la interfaz MyApi
+        System.out.println("Enviando solicitud HTTP...");
+        Call<List<ProductoFilter>> call = ProductoApi.getProductos();
+        call.enqueue(new Callback<List<ProductoFilter>>() {
+            @Override
+            public void onResponse(Call<List<ProductoFilter>> call, Response<List<ProductoFilter>> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        System.out.println("Consumo Exitoso");
+                        List<ProductoFilter> productoFilters = response.body();
+                        // Procesamiento de la respuesta
+
+
+                        List<String> list = new ArrayList<>();
+
+                        for (ProductoFilter productoFilter: productoFilters){
+                            list.add(productoFilter.getProducto().getIUP() + " | " + productoFilter.getProducto().getNombreProduct());
+                        }
+
+                        // Crear un ArrayAdapter con los nombres de los productos
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, list);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        // Crear el diálogo
+                        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
+                        dialogBuilder.setTitle("Seleccionar producto");
+
+                        // Crear el Spinner y configurarlo con el ArrayAdapter
+                        final Spinner spinner = new Spinner(context);
+                        spinner.setAdapter(adapter);
+                        dialogBuilder.setView(spinner);
+
+                        // Configurar el botón "Next"
+                        dialogBuilder.setPositiveButton("Editar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Acciones a realizar al hacer clic en "Next"
+                                String selectedProduct = (String) spinner.getSelectedItem();
+                                // Realizar alguna acción con el producto seleccionado
+
+
+                                for (ProductoFilter producto: objeto){
+                                    if(selectedProduct.equals(producto.getProducto().getIUP() + " | " + producto.getProducto().getNombreProduct())){
+                                        // Navegar a otra vista (reemplaza con la actividad de destino)
+                                        Intent intent = new Intent(context, FormProductActivity.class);
+                                        System.out.println("seleccionado: " + producto);
+                                        intent.putExtra("Item",producto);
+                                        context.startActivity(intent);
+                                    }
+                                }
+                            }
+                        });
+
+                        // Configurar el botón "Cancel"
+                        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Acciones a realizar al hacer clic en "Cancel"
+                                // Por ejemplo, cerrar el diálogo sin hacer nada
+                                dialog.dismiss();
+                            }
+                        });
+
+                        // Mostrar el diálogo
+                        dialogBuilder.show();
+                    } else {
+                        System.out.println("Consumo NO Exitoso " + response.message());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductoFilter>> call, Throwable t) {
+                System.out.println("Error al procesar la solicitud: " + t.getMessage());
+
+            }
+        });
+    }
+
+    public int obtenerElementoSeleccionado() {
+        int position = spinner.getSelectedItemPosition();
+        String selectedValue = spinner.getItemAtPosition(position).toString();
+        for (ProductoFilter objeto: objeto){
+            if(selectedValue.equals(objeto.getProducto().getIUP() + " | " + objeto.getProducto().getNombreProduct())){
+                return objeto.getProducto().getIdProduct();
+            }
+        }
+        return 0;
     }
 }

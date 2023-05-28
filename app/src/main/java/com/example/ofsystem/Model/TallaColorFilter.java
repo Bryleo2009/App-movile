@@ -1,11 +1,13 @@
 package com.example.ofsystem.Model;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-public class TallaColorFilter {
+public class TallaColorFilter implements Serializable {
 
     public int cantidad;
     public int talla;

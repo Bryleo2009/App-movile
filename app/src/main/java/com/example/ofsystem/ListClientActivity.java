@@ -20,7 +20,7 @@ import com.example.ofsystem.Service.ProductoServiceImpl;
 public class ListClientActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
     ListView listCliente;
-    Button btnNuevo;
+    Button btnNuevo,btnEditar;
     SwipeRefreshLayout swipeRefreshLayout; //recarga de pagina
     ClienteServiceImpl clienteService = new ClienteServiceImpl();
     
@@ -33,10 +33,8 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         listCliente = findViewById(R.id.listClientes);
-        btnNuevo = findViewById(R.id.btnNuevo);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
-        btnNuevo.setOnClickListener(this);
         listCliente.setOnItemClickListener(this);
 
         clienteService.listarClientes(null);
@@ -72,29 +70,12 @@ public class ListClientActivity extends AppCompatActivity implements View.OnClic
     //accion click del boton
     @Override
     public void onClick(View v) {
-        if (v == btnNuevo) {
-            clienteService.listarClientes(listCliente);
-        }
 
     }
 
     //accion click de la lista
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        if (parent == listCliente) {
-//
-//            // Obtener el objeto Producto de la posición seleccionada
-//            ProductoFilter seleccion = (ProductoFilter) parent.getItemAtPosition(position);
-//
-//            // Imprimir la información del objeto en la consola
-//            System.out.println("Prodcuto seleccionado: " + seleccion.toString());
-//
-//            // Crear una instancia del diálogo y pasarle los datos
-//            ModalServiceImpl dialog = ModalServiceImpl.newInstance(seleccion);
-//
-//            // Mostrar el diálogo
-//            dialog.show(getSupportFragmentManager(), "my_dialog");
-//
-//        }
+
     }
 }

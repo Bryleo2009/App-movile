@@ -36,7 +36,7 @@ public class TallaServiceImpl implements AdapterView.OnItemSelectedListener {
         TallaApi = retrofit.create(TallaApi.class);
     }
 
-    public void listarTallas(Spinner spinner) {
+    public void listarTallas(Spinner spinner, List<Talla> obj) {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
         this.spinner = spinner; //cojo el valor para usarlo posteriormente
@@ -60,7 +60,15 @@ public class TallaServiceImpl implements AdapterView.OnItemSelectedListener {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, cateList);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner.setAdapter(adapter);
-
+                        if (obj != null) {
+                            for (int i = 0; i< tallas.size(); i++){
+                                for (Talla talla: obj){
+                                    if(talla.getIdTalla() == tallas.get(i).getIdTalla()){
+                                        spinner.setSelection(i);
+                                    }
+                                }
+                            }
+                        }
                         
                     } else {
                         System.out.println("Consumo NO Exitoso " + response.message());
