@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FormProductActivity">
-
+    tools:context=".FormClienteActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -32,24 +31,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/input_idProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_margin="5dp"
-                android:layout_marginTop="104dp"
-                android:ems="10"
-                android:inputType="text"
-                android:paddingLeft="15dp"
-                android:text=""
-                android:textSize="14sp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_nombreProduct"
-                tools:ignore="MissingConstraints" />
-
             <TextView
                 android:id="@+id/title"
                 android:theme="@style/Theme.Ejer1"
@@ -57,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
-                android:text="FORMULARIO DE PRODUCTOS"
+                android:text="FORMULARIO DE CLIENTES"
                 android:textAlignment="center"
                 android:textSize="14dp"
                 android:textStyle="bold"
@@ -67,14 +48,14 @@
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:id="@+id/text_nombreProduct"
+                android:id="@+id/text_dniCliente"
                 android:theme="@style/Theme.Ejer1"
                 android:textAppearance="?attr/SubtituloStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:paddingLeft="15dp"
-                android:text="> Nombre de producto"
+                android:text="> DNI del cliente"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +64,7 @@
                 tools:ignore="MissingConstraints" />
 
             <EditText
-                android:id="@+id/input_nombreProduct"
+                android:id="@+id/input_dniProduct"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -96,27 +77,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_nombreProduct"
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:id="@+id/text_descripcionProduct"
+                android:id="@+id/text_nombreCliente"
                 android:theme="@style/Theme.Ejer1"
                 android:textAppearance="?attr/SubtituloStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:paddingLeft="15dp"
-                android:text="> Descripcion"
+                android:text="> Nombre del cliente"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_nombreProduct"
                 tools:ignore="MissingConstraints" />
 
             <EditText
-                android:id="@+id/input_descripcionProduct"
+                android:id="@+id/input_nombreCliente"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -128,27 +107,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_descripcionProduct"
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:id="@+id/text_imagenProduct"
+                android:id="@+id/text_apellidoCliente"
                 android:theme="@style/Theme.Ejer1"
                 android:textAppearance="?attr/SubtituloStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:paddingLeft="15dp"
-                android:text="> URL imagen"
+                android:text="> Apellidos del cliente"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_descripcionProduct"
                 tools:ignore="MissingConstraints" />
 
             <EditText
-                android:id="@+id/input_imagenProduct"
+                android:id="@+id/input_apellidoCliente"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -160,238 +137,101 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_imagenProduct"
                 tools:ignore="MissingConstraints" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/text_precioUniProduct"
-                    android:theme="@style/Theme.Ejer1"
-                    android:textAppearance="?attr/SubtituloStyle"
-                    android:layout_width="165dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:paddingLeft="15dp"
-                    android:text="> Precio Uni."
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/input_precioUniProduct"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="numberDecimal"
-                    android:paddingLeft="15dp"
-                    android:text=""
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/text_precioDescProduct"
-                    android:theme="@style/Theme.Ejer1"
-                    android:textAppearance="?attr/SubtituloStyle"
-                    android:layout_width="169dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:paddingLeft="15dp"
-                    android:text="> Precio Desc."
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/input_precioDescProduct"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_precioUniProduct"
-                    tools:ignore="MissingConstraints" />
-
-                <EditText
-                    android:id="@+id/input_precioDescProduct"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:ems="10"
-                    android:inputType="numberDecimal"
-                    android:paddingLeft="15dp"
-                    android:text=""
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/text_precioDescProduct"
-                    app:layout_constraintTop_toBottomOf="@+id/input_precioUniProduct"
-                    tools:ignore="MissingConstraints" />
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/text_categoriaProduct"
+                android:id="@+id/text_direccionCliente"
                 android:theme="@style/Theme.Ejer1"
                 android:textAppearance="?attr/SubtituloStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:paddingLeft="15dp"
-                android:text="> Categoría del producto"
+                android:text="> Direccion del cliente"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
 
-            <Spinner
-                android:id="@+id/select_categoria"
+            <EditText
+                android:id="@+id/input_direccionCliente"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:ems="10"
+                android:inputType="text"
                 android:paddingLeft="15dp"
-                android:textSize="14dp"
+                android:text=""
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
 
-
             <TextView
-                android:id="@+id/text_marcaProduct"
+                android:id="@+id/text_celularCliente"
                 android:theme="@style/Theme.Ejer1"
                 android:textAppearance="?attr/SubtituloStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:paddingLeft="15dp"
-                android:text="> Marca del producto"
+                android:text="> Celular del cliente"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
 
-            <Spinner
-                android:id="@+id/select_marca"
+            <EditText
+                android:id="@+id/input_celularCliente"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:ems="10"
+                android:inputType="text"
                 android:paddingLeft="15dp"
-                android:textSize="14dp"
+                android:text=""
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:id="@+id/text_tipoProduct"
+                android:id="@+id/text_correoCliente"
                 android:theme="@style/Theme.Ejer1"
                 android:textAppearance="?attr/SubtituloStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:paddingLeft="15dp"
-                android:text="> Tipo del producto"
+                android:text="> Correo del cliente"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
 
-            <Spinner
-                android:id="@+id/select_tipo"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_margin="5dp"
-                android:paddingLeft="15dp"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints" />
-
-
-            <TextView
-                android:id="@+id/text_tallaProduct"
-                android:theme="@style/Theme.Ejer1"
-                android:textAppearance="?attr/SubtituloStyle"
+            <EditText
+                android:id="@+id/input_correoCliente"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:ems="10"
+                android:inputType="text"
                 android:paddingLeft="15dp"
-                android:text="> Tallas"
-                android:textSize="14dp"
-                android:textStyle="bold"
+                android:text=""
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
-
-            <Spinner
-                android:id="@+id/select_talla"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_margin="5dp"
-                android:paddingLeft="15dp"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/text_colorProduct"
-                android:theme="@style/Theme.Ejer1"
-                android:textAppearance="?attr/SubtituloStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:paddingLeft="15dp"
-                android:text="> Colores"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <Spinner
-                android:id="@+id/select_color"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_margin="5dp"
-                android:paddingLeft="15dp"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/text_etiquetaProduct"
-                android:theme="@style/Theme.Ejer1"
-                android:textAppearance="?attr/SubtituloStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_margin="5dp"
-                android:paddingLeft="15dp"
-                android:text="> Etiquetas"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                tools:ignore="MissingConstraints" />
-
-            <LinearLayout
-                android:id="@+id/etiquetaProduct"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:paddingLeft="15dp"
-                android:orientation="vertical">
-
-                <!--Aqui irán los checks-->
-            </LinearLayout>
 
 
             <Button
-                android:id="@+id/btnRegistrar"
+                android:id="@+id/btnRegistrarCliente"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -404,5 +244,6 @@
                 tools:layout_editor_absoluteY="881dp" />
         </LinearLayout>
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
