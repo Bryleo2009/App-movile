@@ -69,6 +69,8 @@ public class FormClienteActivity extends AppCompatActivity implements AdapterVie
             celularEditText.setText(valor.getCelularCliente());
             correoEditText.setText(valor.getCorreoCliente());
 
+            dniEditText.setEnabled(false);
+
             btnRegistrarCliente.setText("Guardar");
         }
     }
@@ -90,7 +92,7 @@ public class FormClienteActivity extends AppCompatActivity implements AdapterVie
             String apellido = apellidoEditText.getText().toString();
             String direccion = direccionEditText.getText().toString();
             String celular = celularEditText.getText().toString();
-            String correo = apellidoEditText.getText().toString();
+            String correo = correoEditText.getText().toString();
 
 
             cliente.setDniCliente(dni);

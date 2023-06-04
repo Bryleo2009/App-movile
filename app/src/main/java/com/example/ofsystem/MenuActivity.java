@@ -13,10 +13,8 @@ import com.example.ofsystem.Model.Cliente;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener{
-    LinearLayout btnProductos;
-    LinearLayout btnClientes;
-    Button bt1;
-    Button bt2;
+    LinearLayout btnProductos,btnClientes, btnProveedor, btnMedioPago, btnTipoComprobante;
+    Button bt1, bt2, btn4,btn5, btn6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +30,21 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         bt2 = findViewById(R.id.btn2);
         btnClientes.setOnClickListener(this);
         bt2.setOnClickListener(this);
+
+        btnProveedor = findViewById(R.id.btnProveedor);
+        btn4 = findViewById(R.id.btn4);
+        btnProveedor.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+
+        btnMedioPago = findViewById(R.id.btnMedioPago);
+        btn5 = findViewById(R.id.btn5);
+        btnMedioPago.setOnClickListener(this);
+        btn5.setOnClickListener(this);
+
+        btnTipoComprobante = findViewById(R.id.btnTipoComprobante);
+        btn6 = findViewById(R.id.btn6);
+        btnTipoComprobante.setOnClickListener(this);
+        btn6.setOnClickListener(this);
     }
 
     @Override
@@ -42,6 +55,18 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (v == btnClientes || v == bt2) {
             Intent intent = new Intent(MenuActivity.this, ListClientActivity.class);
+            startActivity(intent);
+        }
+        if (v == btnProveedor || v == btn4) {
+            Intent intent = new Intent(MenuActivity.this, ListProveedorActivity.class);
+            startActivity(intent);
+        }
+        if (v == btnMedioPago || v == btn5) {
+            Intent intent = new Intent(MenuActivity.this, ListMedioPagoActivity.class);
+            startActivity(intent);
+        }
+        if (v == btnTipoComprobante || v == btn6) {
+            Intent intent = new Intent(MenuActivity.this, ListTipoComprobanteActivity.class);
             startActivity(intent);
         }
     }

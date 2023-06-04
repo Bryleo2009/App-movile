@@ -17,6 +17,24 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".FormTipoComprobanteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FormProveedorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FormMedioPagoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListTipoComprobanteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListMedioPagoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListProveedorActivity"
+            android:exported="false" />
+        <activity
             android:name=".FormClienteActivity"
             android:exported="false" />
         <activity
