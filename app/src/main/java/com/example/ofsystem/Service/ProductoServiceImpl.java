@@ -8,12 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ofsystem.Api.ProductoApi;
 import com.example.ofsystem.Config.Config;
@@ -28,6 +33,7 @@ import com.example.ofsystem.Model.RegistroProductFilter;
 import com.example.ofsystem.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,14 +101,14 @@ public class ProductoServiceImpl {
                                     TextView tvNumero = (TextView) itemView.findViewById(R.id.txtPrecio);
                                     tvNumero.setText(String.valueOf(productoFilter.getProducto().getPrecioUni()));
 
-                                    TextView tvDescripcion = (TextView) itemView.findViewById(R.id.txtDescripcion);
-                                    tvDescripcion.setText(productoFilter.getProducto().getDescripcionProduct());
+//                                    TextView tvDescripcion = (TextView) itemView.findViewById(R.id.txtDescripcion);
+//                                    tvDescripcion.setText(productoFilter.getProducto().getDescripcionProduct());
 
                                     TextView tvTipo = (TextView) itemView.findViewById(R.id.txtTipo);
                                     tvTipo.setText(productoFilter.getProducto().getIdTipoProduc().getIdentItem());
 
-                                    TextView tvId = (TextView) itemView.findViewById(R.id.txtId);
-                                    tvId.setText(String.valueOf(productoFilter.getProducto().getIdProduct()));
+//                                    TextView tvId = (TextView) itemView.findViewById(R.id.txtId);
+//                                    tvId.setText(String.valueOf(productoFilter.getProducto().getIdProduct()));
 
                                 } catch (Exception e) {
                                     System.out.println("Error de consumo interno: " + e.getMessage());
@@ -136,6 +142,43 @@ public class ProductoServiceImpl {
             }
         });
 
+    }
+
+    public void listarProductos2(RecyclerView recyclerView) {
+        System.out.println("Enviando solicitud HTTP...");
+        Call<List<ProductoFilter>> call = ProductoApi.getProductos();
+        call.enqueue(new Callback<List<ProductoFilter>>() {
+            @Override
+            public void onResponse(Call<List<ProductoFilter>> call, Response<List<ProductoFilter>> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        System.out.println("Consumo Exitoso");
+                        List<ProductoFilter> productoFilters = response.body();
+                        objeto = response.body();
+
+                        // Crear un nuevo adaptador personalizado
+                        ProductoAdapter adapter = new ProductoAdapter(productoFilters);
+
+                        // Asignar el adaptador al RecyclerView
+                        recyclerView.setAdapter(adapter);
+
+                        // Mostrar la alerta flotante
+                        Toast.makeText(recyclerView.getContext(), "Lista actualizada", Toast.LENGTH_SHORT).show();
+                    } else {
+                        System.out.println("Consumo NO Exitoso " + response.message());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductoFilter>> call, Throwable t) {
+                System.out.println("Error al procesar la solicitud: " + t.getMessage());
+                // Mostrar la alerta flotante
+                Snackbar.make(recyclerView, "Error al procesar la solicitud: " + t.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void crearProductos(Context context, RegistroProductFilter producto, View v, boolean edit) {
@@ -413,4 +456,90 @@ public class ProductoServiceImpl {
         }
         return 0;
     }
+}
+
+class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder> {
+
+    private List<ProductoFilter> productoFilters;
+
+    public ProductoAdapter(List<ProductoFilter> productoFilters) {
+        this.productoFilters = productoFilters;
+    }
+
+    @NonNull
+    @Override
+    public ProductoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflar el diseño de la tarjeta de producto
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cmp_cards_product, parent, false);
+
+        // Crear una instancia del ViewHolder y establecer el OnClickListener
+        final ProductoViewHolder viewHolder = new ProductoViewHolder(itemView);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Obtener la posición del elemento en el adaptador
+                int position = viewHolder.getAdapterPosition();
+
+                // Obtener el producto actual
+                ProductoFilter productoFilter = productoFilters.get(position);
+
+                // Lógica para mostrar la alerta o diálogo
+                // ...
+
+                // Imprimir la información del objeto en la consola
+                System.out.println("Producto seleccionado: " + productoFilter.toString());
+
+                // Crear una instancia del diálogo y pasarle los datos
+                ModalServiceImpl dialog = ModalServiceImpl.newInstance(productoFilter);
+
+                // Mostrar el diálogo
+                FragmentManager fragmentManager = ((FragmentActivity) itemView.getContext()).getSupportFragmentManager();
+                dialog.show(fragmentManager, "my_dialog");
+            }
+        });
+
+        return viewHolder;
+    }
+
+
+
+    @Override
+    public void onBindViewHolder(@NonNull ProductoViewHolder holder, int position) {
+        // Obtener el producto actual
+        ProductoFilter productoFilter = productoFilters.get(position);
+
+        // Actualizar los elementos de la tarjeta con los datos del producto
+        holder.txtNombreProducto.setText(productoFilter.getProducto().getNombreProduct());
+        holder.txtPrecio.setText(String.valueOf(productoFilter.getProducto().getPrecioUni()));
+        holder.txtTipo.setText(productoFilter.getProducto().getIdTipoProduc().getIdentItem());
+        try {
+            //Picasso.get().load(Config.BASE_URL + "/media/productosQr/" + ((Producto) mData).getIUP() + ".png").into(imageView);
+
+            Picasso.get().load(((ProductoFilter) productoFilter).getProducto().getImagen()).into(holder.productImageView);
+            System.out.println("Imagen cargada correctamente");
+        } catch (Exception e) {
+            System.out.println("Error al cargar la imagen: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return productoFilters.size();
+    }
+
+    public static class ProductoViewHolder extends RecyclerView.ViewHolder {
+        ImageView productImageView;
+        TextView txtNombreProducto;
+        TextView txtTipo;
+        TextView txtPrecio;
+
+        public ProductoViewHolder(@NonNull View itemView) {
+            super(itemView);
+            productImageView = itemView.findViewById(R.id.productImageView);
+            txtNombreProducto = itemView.findViewById(R.id.txtNombreProducto);
+            txtTipo = itemView.findViewById(R.id.txtTipo);
+            txtPrecio = itemView.findViewById(R.id.txtPrecio);
+        }
+    }
+
 }

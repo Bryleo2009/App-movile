@@ -17,6 +17,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".NavMainActivity"
+            android:exported="true"
+            android:label="@string/title_activity_nav_main"
+            android:theme="@style/Theme.Ejer1.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".FormTipoComprobanteActivity"
             android:exported="false" />
         <activity
