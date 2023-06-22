@@ -9,5 +9,10 @@
             style="?attr/iconoStyle"
             android:icon="@drawable/baseline_inventory_24"
             android:title="Productos" />
+        <item
+            android:id="@+id/loginFragment"
+            style="?attr/iconoStyle"
+            android:icon="@drawable/baseline_inventory_24"
+            android:title="Iniciar Sesion" />
     </group>
 </menu>

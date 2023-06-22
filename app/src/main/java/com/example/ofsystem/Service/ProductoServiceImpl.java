@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class ProductoServiceImpl {
     private ProductoApi ProductoApi;
     private Spinner spinner;
     private List<ProductoFilter> objeto = new ArrayList<>();
-
+    private Context context;
     public ProductoServiceImpl() {
         // Crear una instancia de Retrofit con la URL base de la API RESTful
         //se usa la red 10.0.2.2 siempre para acceder al localhost
@@ -182,12 +183,15 @@ public class ProductoServiceImpl {
     }
 
     public void crearProductos(Context context, RegistroProductFilter producto, View v, boolean edit) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
+
         Call<Void> call;
 
         if(!edit){
-            call = ProductoApi.createProduct(producto);
+            call = ProductoApi.createProduct("Bearer " + authToken,producto);
         } else {
-            call = ProductoApi.modificareProduct(producto);
+            call = ProductoApi.modificareProduct("Bearer " + authToken,producto);
         }
 
         call.enqueue(new Callback<Void>() {
@@ -325,6 +329,8 @@ public class ProductoServiceImpl {
 
     public void eliminarProdcutos(Context context){
         System.out.println("Enviando solicitud HTTP...");
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
         Call<List<ProductoFilter>> call = ProductoApi.getProductos();
         call.enqueue(new Callback<List<ProductoFilter>>() {
             @Override
@@ -367,7 +373,7 @@ public class ProductoServiceImpl {
                                 for (ProductoFilter producto: objeto){
                                     if(selectedProduct.equals(producto.getProducto().getIUP() + " | " + producto.getProducto().getNombreProduct())){
                                         // Navegar a otra vista (reemplaza con la actividad de destino)
-                                        Call<Void> call = ProductoApi.eliminarProducto(producto.getProducto().getIdProduct());
+                                        Call<Void> call = ProductoApi.eliminarProducto("Bearer " + authToken,producto.getProducto().getIdProduct());
                                         call.enqueue(new Callback<Void>() {
                                             @Override
                                             public void onResponse(Call<Void> call, Response<Void> response) {

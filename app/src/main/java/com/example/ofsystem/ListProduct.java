@@ -48,10 +48,10 @@ public class ListProduct extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_list_product);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        listProduct = findViewById(R.id.listProductos);
-        newProduct = (FloatingActionButton) findViewById(R.id.accion_agregar);
-        edictProduct = (FloatingActionButton) findViewById(R.id.accion_editar);
-        eliminarProduct = (FloatingActionButton) findViewById(R.id.accion_eliminar);
+        listProduct = findViewById(R.id.listProductos2);
+        newProduct = (FloatingActionButton) findViewById(R.id.accion_agregar2);
+        edictProduct = (FloatingActionButton) findViewById(R.id.accion_editar2);
+        eliminarProduct = (FloatingActionButton) findViewById(R.id.accion_eliminar2);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         listProduct.setOnItemClickListener(this);

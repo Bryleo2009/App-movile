@@ -3,6 +3,7 @@ package com.example.ofsystem.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MedioPagoServiceImpl {
     private MedioPagoApi MedioPagoApi;
     private List<MedioPago> objeto = new ArrayList<>();
+    private Context context;
 
     public MedioPagoServiceImpl() {
         // Crear una instancia de Retrofit con la URL base de la API RESTful
@@ -120,12 +122,16 @@ public class MedioPagoServiceImpl {
     }
 
     public void crearMedioPagos(Context context, MedioPago MedioPago, View v, boolean edit) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
+
+
         Call<Void> call;
 
         if(!edit){
-            call = MedioPagoApi.createMedioPago(MedioPago);
+            call = MedioPagoApi.createMedioPago("Bearer " + authToken,MedioPago);
         } else {
-            call = MedioPagoApi.modificareMedioPago(MedioPago);
+            call = MedioPagoApi.modificareMedioPago("Bearer " + authToken,MedioPago);
         }
 
         call.enqueue(new Callback<Void>() {
@@ -263,6 +269,9 @@ public class MedioPagoServiceImpl {
 
     public void eliminarMedioPagos(Context context){
         System.out.println("Enviando solicitud HTTP...");
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
+
         Call<List<MedioPago>> call = MedioPagoApi.getMedioPagos();
         call.enqueue(new Callback<List<MedioPago>>() {
             @Override
@@ -305,7 +314,7 @@ public class MedioPagoServiceImpl {
                                 for (MedioPago MedioPago: objeto){
                                     if(selectedProduct.equals(MedioPago.getNombre())){
                                         // Navegar a otra vista (reemplaza con la actividad de destino)
-                                        Call<Void> call = MedioPagoApi.eliminarMedioPago(MedioPago.getIdMedioPago());
+                                        Call<Void> call = MedioPagoApi.eliminarMedioPago("Bearer " + authToken,MedioPago.getIdMedioPago());
                                         call.enqueue(new Callback<Void>() {
                                             @Override
                                             public void onResponse(Call<Void> call, Response<Void> response) {

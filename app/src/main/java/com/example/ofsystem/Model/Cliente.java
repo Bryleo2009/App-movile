@@ -14,58 +14,58 @@ import lombok.NoArgsConstructor;
 public class Cliente implements Serializable {
 	
 
-	public String dniCliente;
-	public String nombreCliente; //Juan Alkexander
-	public String apellidoCliente; // Velazquez Soria
-	public String direccionCliente; //Av.alarcon cercado de lima 45567
-	public String celularCliente; //987474234
-	public String correoCliente; //987474234
+	public String numDocumento;
+	public String nombre; //Juan Alkexander
+	public String apellido; // Velazquez Soria
+	public String direccion; //Av.alarcon cercado de lima 45567
+	public String telefono; //987474234
+	public String correo; //987474234
 
-	public String getDniCliente() {
-		return dniCliente;
+	public String getNumDocumento() {
+		return numDocumento;
 	}
 
-	public void setDniCliente(String dniCliente) {
-		this.dniCliente = dniCliente;
+	public void setNumDocumento(String numDocumento) {
+		this.numDocumento = numDocumento;
 	}
 
-	public String getNombreCliente() {
-		return nombreCliente;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setNombreCliente(String nombreCliente) {
-		this.nombreCliente = nombreCliente;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public String getApellidoCliente() {
-		return apellidoCliente;
+	public String getApellido() {
+		return apellido;
 	}
 
-	public void setApellidoCliente(String apellidoCliente) {
-		this.apellidoCliente = apellidoCliente;
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
-	public String getDireccionCliente() {
-		return direccionCliente;
+	public String getDireccion() {
+		return direccion;
 	}
 
-	public void setDireccionCliente(String direccionCliente) {
-		this.direccionCliente = direccionCliente;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 
-	public String getCelularCliente() {
-		return celularCliente;
+	public String getTelefono() {
+		return telefono;
 	}
 
-	public void setCelularCliente(String celularCliente) {
-		this.celularCliente = celularCliente;
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
-	public String getCorreoCliente() {
-		return correoCliente;
+	public String getCorreo() {
+		return correo;
 	}
 
-	public void setCorreoCliente(String correoCliente) {
-		this.correoCliente = correoCliente;
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 }

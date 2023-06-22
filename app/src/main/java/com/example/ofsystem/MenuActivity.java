@@ -2,14 +2,17 @@ package com.example.ofsystem;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.ofsystem.Model.Cliente;
+import com.example.ofsystem.ui.login.LoginFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener{
@@ -45,6 +48,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         btn6 = findViewById(R.id.btn6);
         btnTipoComprobante.setOnClickListener(this);
         btn6.setOnClickListener(this);
+
+        //activacion del toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -69,5 +77,15 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(MenuActivity.this, ListTipoComprobanteActivity.class);
             startActivity(intent);
         }
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

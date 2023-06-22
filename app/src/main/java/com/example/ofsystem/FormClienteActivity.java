@@ -62,12 +62,12 @@ public class FormClienteActivity extends AppCompatActivity implements AdapterVie
             EditText correoEditText = findViewById(R.id.input_correoCliente);
 
             // Asignar los valores del objeto ProductoFilter a los campos del formulario
-            dniEditText.setText(valor.getDniCliente());
-            nombreEditText.setText(valor.getNombreCliente());
-            apellidoEditText.setText(valor.getApellidoCliente());
-            direccionEditText.setText(valor.getDireccionCliente());
-            celularEditText.setText(valor.getCelularCliente());
-            correoEditText.setText(valor.getCorreoCliente());
+            dniEditText.setText(valor.getNumDocumento());
+            nombreEditText.setText(valor.getNombre());
+            apellidoEditText.setText(valor.getApellido());
+            direccionEditText.setText(valor.getDireccion());
+            celularEditText.setText(valor.getTelefono());
+            correoEditText.setText(valor.getCorreo());
 
             dniEditText.setEnabled(false);
 
@@ -95,12 +95,12 @@ public class FormClienteActivity extends AppCompatActivity implements AdapterVie
             String correo = correoEditText.getText().toString();
 
 
-            cliente.setDniCliente(dni);
-            cliente.setNombreCliente(nombre);
-            cliente.setApellidoCliente(apellido);
-            cliente.setDireccionCliente(direccion);
-            cliente.setCelularCliente(celular);
-            cliente.setCorreoCliente(correo);
+            cliente.setNumDocumento(dni);
+            cliente.setNombre(nombre);
+            cliente.setApellido(apellido);
+            cliente.setDireccion(direccion);
+            cliente.setTelefono(celular);
+            cliente.setCorreo(correo);
 
             Context context = this;
             if(btnRegistrarCliente.getText().equals("Guardar")){

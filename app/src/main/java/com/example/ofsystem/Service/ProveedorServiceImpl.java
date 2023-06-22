@@ -3,6 +3,7 @@ package com.example.ofsystem.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProveedorServiceImpl {
     private ProveedorApi ProveedorApi;
     private List<Proveedor> objeto = new ArrayList<>();
+    private Context context;
 
     public ProveedorServiceImpl() {
         // Crear una instancia de Retrofit con la URL base de la API RESTful
@@ -128,12 +130,16 @@ public class ProveedorServiceImpl {
     }
 
     public void crearProveedors(Context context, Proveedor Proveedor, View v, boolean edit) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
+
+
         Call<Void> call;
 
         if(!edit){
-            call = ProveedorApi.createProveedor(Proveedor);
+            call = ProveedorApi.createProveedor("Bearer " + authToken,Proveedor);
         } else {
-            call = ProveedorApi.modificareProveedor(Proveedor);
+            call = ProveedorApi.modificareProveedor("Bearer " + authToken,Proveedor);
         }
 
         call.enqueue(new Callback<Void>() {
@@ -190,6 +196,9 @@ public class ProveedorServiceImpl {
     public void editarProveedors(Context context) {
         // Consumir el endpoint de la API RESTful usando la interfaz MyApi
         System.out.println("Enviando solicitud HTTP...");
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
+
         Call<List<Proveedor>> call = ProveedorApi.getProveedors();
         call.enqueue(new Callback<List<Proveedor>>() {
             @Override
@@ -271,6 +280,8 @@ public class ProveedorServiceImpl {
 
     public void eliminarProveedors(Context context){
         System.out.println("Enviando solicitud HTTP...");
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
         Call<List<Proveedor>> call = ProveedorApi.getProveedors();
         call.enqueue(new Callback<List<Proveedor>>() {
             @Override
@@ -313,7 +324,7 @@ public class ProveedorServiceImpl {
                                 for (Proveedor Proveedor: objeto){
                                     if(selectedProduct.equals(Proveedor.getRuc() + " | " + Proveedor.getRazonSocial())){
                                         // Navegar a otra vista (reemplaza con la actividad de destino)
-                                        Call<Void> call = ProveedorApi.eliminarProveedor(Proveedor.getRuc());
+                                        Call<Void> call = ProveedorApi.eliminarProveedor("Bearer " + authToken,Proveedor.getRuc());
                                         call.enqueue(new Callback<Void>() {
                                             @Override
                                             public void onResponse(Call<Void> call, Response<Void> response) {

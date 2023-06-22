@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -19,12 +20,15 @@ public interface ClienteApi {
     Call<List<Cliente>> getClientes();
 
     @POST("/Clientes")
-    Call<Void> createCliente (@Body Cliente cliente);
+    Call<Void> createCliente (@Header("Authorization") String authToken,@Body Cliente cliente);
 
     @PUT("/Clientes")
-    Call<Void> modificareCliente (@Body Cliente cliente);
+    Call<Void> modificareCliente (@Header("Authorization") String authToken, @Body Cliente cliente);
 
     @DELETE("/Clientes/{id}")
-    Call<Void> eliminarCliente(@Path("id") String id);
+    Call<Void> eliminarCliente(@Header("Authorization") String authToken,@Path("id") String id);
+
+    @GET("/Clientes/byNum/{num}")
+    Call<Cliente> getClientesbyUsername(@Path("num") String username);
 }
 

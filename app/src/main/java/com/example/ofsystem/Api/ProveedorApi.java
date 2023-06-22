@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -17,12 +18,12 @@ public interface ProveedorApi {
     Call<List<Proveedor>> getProveedors();
 
     @POST("/Proveedors")
-    Call<Void> createProveedor (@Body Proveedor Proveedor);
+    Call<Void> createProveedor (@Header("Authorization") String authToken, @Body Proveedor Proveedor);
 
     @PUT("/Proveedors")
-    Call<Void> modificareProveedor (@Body Proveedor Proveedor);
+    Call<Void> modificareProveedor (@Header("Authorization") String authToken,@Body Proveedor Proveedor);
 
     @DELETE("/Proveedors/{id}")
-    Call<Void> eliminarProveedor(@Path("id") String id);
+    Call<Void> eliminarProveedor(@Header("Authorization") String authToken,@Path("id") String id);
 }
 

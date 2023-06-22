@@ -3,6 +3,7 @@ package com.example.ofsystem.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,12 +121,14 @@ public class TipoComprobanteServiceImpl {
     }
 
     public void crearTipoComprobantes(Context context, TipoComprobante TipoComprobante, View v, boolean edit) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
         Call<Void> call;
 
         if(!edit){
-            call = TipoComprobanteApi.createTipoComprobante(TipoComprobante);
+            call = TipoComprobanteApi.createTipoComprobante("Bearer " + authToken,TipoComprobante);
         } else {
-            call = TipoComprobanteApi.modificareTipoComprobante(TipoComprobante);
+            call = TipoComprobanteApi.modificareTipoComprobante("Bearer " + authToken,TipoComprobante);
         }
 
         call.enqueue(new Callback<Void>() {
@@ -263,6 +266,8 @@ public class TipoComprobanteServiceImpl {
 
     public void eliminarTipoComprobantes(Context context){
         System.out.println("Enviando solicitud HTTP...");
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
         Call<List<TipoComprobante>> call = TipoComprobanteApi.getTipoComprobantes();
         call.enqueue(new Callback<List<TipoComprobante>>() {
             @Override
@@ -305,7 +310,7 @@ public class TipoComprobanteServiceImpl {
                                 for (TipoComprobante TipoComprobante: objeto){
                                     if(selectedProduct.equals(TipoComprobante.getNombre())){
                                         // Navegar a otra vista (reemplaza con la actividad de destino)
-                                        Call<Void> call = TipoComprobanteApi.eliminarTipoComprobante(TipoComprobante.getIdTipoComp());
+                                        Call<Void> call = TipoComprobanteApi.eliminarTipoComprobante("Bearer " + authToken,TipoComprobante.getIdTipoComp());
                                         call.enqueue(new Callback<Void>() {
                                             @Override
                                             public void onResponse(Call<Void> call, Response<Void> response) {

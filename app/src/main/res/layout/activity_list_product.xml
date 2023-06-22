@@ -19,75 +19,75 @@
         app:titleTextAppearance="?attr/toolbarTitleTextColor"
         />
 
-    <!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-    <!--        android:id="@+id/swipeRefreshLayout"-->
-    <!--        android:layout_width="396dp"-->
-    <!--        android:layout_height="640dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.461"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/toolbar">-->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="396dp"
+            android:layout_height="640dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.461"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-    <!--&lt;!&ndash;        <ListView&ndash;&gt;-->
-    <!--&lt;!&ndash;            android:id="@+id/listProductos"&ndash;&gt;-->
-    <!--&lt;!&ndash;            android:layout_width="0dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;            android:layout_height="635dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;            android:visibility="visible"&ndash;&gt;-->
-    <!--&lt;!&ndash;            app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;            app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;            tools:ignore="MissingConstraints"&ndash;&gt;-->
-    <!--&lt;!&ndash;            tools:layout_editor_absoluteY="1dp"></ListView>&ndash;&gt;-->
-    <!--        <androidx.recyclerview.widget.RecyclerView-->
-    <!--            android:id="@+id/listProductos"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="0dp"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
-    <!--            app:layout_constraintBottom_toTopOf="@+id/menu_fab"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent" />-->
+            <ListView
+                android:id="@+id/listProductos2"
+                android:layout_width="0dp"
+                android:layout_height="635dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="1dp"></ListView>
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/listProductos"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/menu_fab"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent" />-->
 
-    <!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-    <!--    <com.getbase.floatingactionbutton.FloatingActionsMenu-->
-    <!--        android:id="@+id/menu_fab"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="end|bottom"-->
-    <!--        app:fab_labelStyle="@style/Etiquetas"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        fab:fab_addButtonColorNormal="?attr/colorPrimary"-->
-    <!--        fab:fab_addButtonSize="normal"-->
-    <!--        fab:fab_labelsPosition="left">-->
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/menu_fab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            app:fab_labelStyle="@style/Etiquetas"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            fab:fab_addButtonColorNormal="?attr/colorPrimary"
+            fab:fab_addButtonSize="normal"
+            fab:fab_labelsPosition="left">
 
-    <!--        <com.getbase.floatingactionbutton.FloatingActionButton-->
-    <!--            android:id="@+id/accion_eliminar"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            fab:fab_colorNormal="@color/white"-->
-    <!--            fab:fab_icon="@drawable/baseline_delete_24"-->
-    <!--            fab:fab_size="mini"-->
-    <!--            fab:fab_title="Eliminar" />-->
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/accion_eliminar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_icon="@drawable/baseline_delete_24"
+                fab:fab_size="mini"
+                fab:fab_title="Eliminar" />
 
-    <!--        <com.getbase.floatingactionbutton.FloatingActionButton-->
-    <!--            android:id="@+id/accion_editar"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            fab:fab_colorNormal="@color/white"-->
-    <!--            fab:fab_icon="@drawable/baseline_drive_file_rename_outline_24"-->
-    <!--            fab:fab_size="mini"-->
-    <!--            fab:fab_title="Editar" />-->
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/accion_editar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_icon="@drawable/baseline_drive_file_rename_outline_24"
+                fab:fab_size="mini"
+                fab:fab_title="Editar" />
 
-    <!--        <com.getbase.floatingactionbutton.FloatingActionButton-->
-    <!--            android:id="@+id/accion_agregar"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            fab:fab_colorNormal="@color/white"-->
-    <!--            fab:fab_icon="@drawable/baseline_bookmark_add_24"-->
-    <!--            fab:fab_size="mini"-->
-    <!--            fab:fab_title="Agregar" />-->
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/accion_agregar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_icon="@drawable/baseline_bookmark_add_24"
+                fab:fab_size="mini"
+                fab:fab_title="Agregar" />
 
-    <!--    </com.getbase.floatingactionbutton.FloatingActionsMenu>-->
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </androidx.constraintlayout.widget.ConstraintLayout>

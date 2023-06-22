@@ -3,6 +3,7 @@ package com.example.ofsystem.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClienteServiceImpl {
     private ClienteApi ClienteApi;
     private List<Cliente> objeto = new ArrayList<>();
+    private Context context;
+
 
     public ClienteServiceImpl() {
         // Crear una instancia de Retrofit con la URL base de la API RESTful
@@ -82,16 +85,16 @@ public class ClienteServiceImpl {
 
                                     // Actualizar los elementos de la vista con los datos del Cliente
                                     TextView tvDni = (TextView) itemView.findViewById(R.id.txtDni);
-                                    tvDni.setText(Cliente.getDniCliente());
+                                    tvDni.setText(Cliente.getNumDocumento());
 
                                     TextView tvCorreo = (TextView) itemView.findViewById(R.id.txtCorreoCliente);
-                                    tvCorreo.setText(String.valueOf(Cliente.getCorreoCliente()));
+                                    tvCorreo.setText(String.valueOf(Cliente.getCorreo()));
 
                                     TextView tvNombre = (TextView) itemView.findViewById(R.id.txtNombreCliente);
-                                    tvNombre.setText(Cliente.getNombreCliente() + " " + Cliente.getApellidoCliente());
+                                    tvNombre.setText(Cliente.getNombre() + " " + Cliente.getApellido());
 
                                     TextView tvCelular = (TextView) itemView.findViewById(R.id.txtCelularCliente);
-                                    tvCelular.setText(Cliente.getCelularCliente());
+                                    tvCelular.setText(Cliente.getTelefono());
 
                                 } catch (Exception e) {
                                     System.out.println("Error de consumo interno: " + e.getMessage());
@@ -128,12 +131,14 @@ public class ClienteServiceImpl {
     }
 
     public void crearClientes(Context context, Cliente cliente, View v, boolean edit) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
         Call<Void> call;
 
         if(!edit){
-            call = ClienteApi.createCliente(cliente);
+            call = ClienteApi.createCliente("Bearer " + authToken,cliente);
         } else {
-            call = ClienteApi.modificareCliente(cliente);
+            call = ClienteApi.modificareCliente("Bearer " + authToken,cliente);
         }
 
         call.enqueue(new Callback<Void>() {
@@ -158,7 +163,7 @@ public class ClienteServiceImpl {
                         materialDialogBuilder.show();
                     } else {
                         // Hubo un error al crear el producto
-                        System.out.println("Consumo NO Exitoso " + response.message());
+                        System.out.println("Consumo NO Exitoso " + response);
                         MaterialAlertDialogBuilder materialDialogBuilder = new MaterialAlertDialogBuilder(v.getContext())
                                 .setTitle("Cliente NO Registrado")
                                 .setMessage("Este Cliente no ha sido creado, posiblemente ya se encuentra uno similar en la base de datos")
@@ -204,7 +209,7 @@ public class ClienteServiceImpl {
                         List<String> list = new ArrayList<>();
 
                         for (Cliente Cliente: Clientes){
-                            list.add(Cliente.getDniCliente() + " | " + Cliente.getApellidoCliente());
+                            list.add(Cliente.getNumDocumento() + " | " + Cliente.getApellido());
                         }
 
                         // Crear un ArrayAdapter con los nombres de los productos
@@ -230,7 +235,7 @@ public class ClienteServiceImpl {
 
 
                                 for (Cliente cliente: objeto){
-                                    if(selectedProduct.equals(cliente.getDniCliente() + " | " + cliente.getApellidoCliente())){
+                                    if(selectedProduct.equals(cliente.getNumDocumento() + " | " + cliente.getApellido())){
                                         // Navegar a otra vista (reemplaza con la actividad de destino)
                                         Intent intent = new Intent(context, FormClienteActivity.class);
                                         System.out.println("seleccionado: " + cliente);
@@ -271,6 +276,8 @@ public class ClienteServiceImpl {
 
     public void eliminarClientes(Context context){
         System.out.println("Enviando solicitud HTTP...");
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
         Call<List<Cliente>> call = ClienteApi.getClientes();
         call.enqueue(new Callback<List<Cliente>>() {
             @Override
@@ -285,7 +292,7 @@ public class ClienteServiceImpl {
                         List<String> list = new ArrayList<>();
 
                         for (Cliente Cliente: Clientes){
-                            list.add(Cliente.getDniCliente() + " | " + Cliente.getApellidoCliente());
+                            list.add(Cliente.getNumDocumento() + " | " + Cliente.getApellido());
                         }
 
                         // Crear un ArrayAdapter con los nombres de los productos
@@ -311,9 +318,9 @@ public class ClienteServiceImpl {
 
 
                                 for (Cliente cliente: objeto){
-                                    if(selectedProduct.equals(cliente.getDniCliente() + " | " + cliente.getApellidoCliente())){
+                                    if(selectedProduct.equals(cliente.getNumDocumento() + " | " + cliente.getApellido())){
                                         // Navegar a otra vista (reemplaza con la actividad de destino)
-                                        Call<Void> call = ClienteApi.eliminarCliente(cliente.getDniCliente());
+                                        Call<Void> call = ClienteApi.eliminarCliente("Bearer " + authToken,cliente.getNumDocumento());
                                         call.enqueue(new Callback<Void>() {
                                             @Override
                                             public void onResponse(Call<Void> call, Response<Void> response) {

@@ -9,4 +9,9 @@
         android:name="com.example.ofsystem.ui.product.ListProductFragment"
         android:label="Productos"
         tools:layout="@layout/fragment_list_product" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.ofsystem.ui.login.LoginFragment"
+        android:label="Inicio de Sesion"
+        tools:layout="@layout/fragment_login" />
 </navigation>
