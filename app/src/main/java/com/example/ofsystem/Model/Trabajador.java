@@ -1,20 +1,23 @@
 package com.example.ofsystem.Model;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import lombok.Data;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente implements Serializable {
-
+public class Trabajador implements Serializable {
 	public int id;
+	public String imagen;
+	public Usuario idUserTrabajador;
+	public boolean isTrabajador;
+
 	public String nombre; //Juan Alkexander
 	public String apellido; // Velazquez Soria
 	public Date fechaNac;
@@ -25,9 +28,6 @@ public class Cliente implements Serializable {
 	public String numDocumento;
 	public Usuario idUserCliente;
 	public TipoDoc idTipoDoc;
-	public String imagen;
-	public Usuario idUserTrabajador;
-	public boolean isTrabajador;
 
 	public int getId() {
 		return id;
@@ -35,6 +35,30 @@ public class Cliente implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+	public Usuario getIdUserTrabajador() {
+		return idUserTrabajador;
+	}
+
+	public void setIdUserTrabajador(Usuario idUserTrabajador) {
+		this.idUserTrabajador = idUserTrabajador;
+	}
+
+	public boolean isTrabajador() {
+		return isTrabajador;
+	}
+
+	public void setTrabajador(boolean trabajador) {
+		isTrabajador = trabajador;
 	}
 
 	public String getNombre() {
@@ -115,29 +139,5 @@ public class Cliente implements Serializable {
 
 	public void setIdTipoDoc(TipoDoc idTipoDoc) {
 		this.idTipoDoc = idTipoDoc;
-	}
-
-	public String getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
-
-	public Usuario getIdUserTrabajador() {
-		return idUserTrabajador;
-	}
-
-	public void setIdUserTrabajador(Usuario idUserTrabajador) {
-		this.idUserTrabajador = idUserTrabajador;
-	}
-
-	public boolean isTrabajador() {
-		return isTrabajador;
-	}
-
-	public void setTrabajador(boolean trabajador) {
-		isTrabajador = trabajador;
 	}
 }

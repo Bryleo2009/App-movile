@@ -1,7 +1,9 @@
 package com.example.ofsystem;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,10 +12,13 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.ofsystem.Model.Cliente;
 import com.example.ofsystem.ui.login.LoginFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener{
     LinearLayout btnProductos,btnClientes, btnProveedor, btnMedioPago, btnTipoComprobante;
@@ -83,9 +88,27 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            finish();
+            // Aquí puedes agregar la lógica para cerrar sesión
+            logout();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+    private SharedPreferences sharedPreferences;
+    private void logout() {
+        // Verificar si sharedPreferences es nulo y obtener una instancia
+        if (sharedPreferences == null) {
+            sharedPreferences = getSharedPreferences("my_prefs", MODE_PRIVATE);
+        }
+
+        // Limpiar SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(this, NavMainActivity.class);
+        startActivity(intent);
+    }
+
+
 }

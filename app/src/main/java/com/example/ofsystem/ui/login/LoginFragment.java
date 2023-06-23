@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +25,10 @@ import com.example.ofsystem.MenuActivity;
 import com.example.ofsystem.Model.LoginRequest;
 import com.example.ofsystem.Model.LoginResponse;
 import com.example.ofsystem.R;
+import com.example.ofsystem.Service.ClienteServiceImpl;
+import com.example.ofsystem.Service.DataCallback;
+import com.example.ofsystem.ui.product.ListProductFragment;
+import com.google.android.material.navigation.NavigationView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,11 +41,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Use the {@link LoginFragment} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment implements View.OnClickListener{
+public class LoginFragment extends Fragment implements View.OnClickListener, DataCallback {
 
     Button btnLogin;
     private EditText usernameEditText;
     private EditText passwordEditText;
+
+    ClienteServiceImpl service = new ClienteServiceImpl();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +64,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if(v == btnLogin){
+        if (v == btnLogin) {
             // Obtener las credenciales ingresadas por el usuario
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
@@ -89,15 +99,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     // Guardar el token en SharedPreferences o en otro mecanismo de almacenamiento
                     saveAuthToken(authToken);
 
-                    // Redirigir a la siguiente actividad después de iniciar sesión
-                    Intent intent = new Intent(getActivity(), MenuActivity.class);
-                    startActivity(intent);
+                    service.listarCliente(username, LoginFragment.this);
+                    service.listarTrabajador(username, LoginFragment.this);
                 } else {
                     // Manejar el caso de inicio de sesión fallido (credenciales inválidas, etc.)
                     Toast.makeText(getActivity(), "Inicio de sesión fallido", Toast.LENGTH_SHORT).show();
                 }
             }
-
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
@@ -113,5 +121,46 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("authToken", authToken);
         editor.apply();
+    }
+
+    @Override
+    public void onClienteResult(int idCliente) {
+        System.out.println("idCliente: " + idCliente);
+        // Aquí puedes realizar las operaciones necesarias con el idCliente, como guardarlo en SharedPreferences
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("idCliente", String.valueOf(idCliente));
+        editor.apply();
+
+        // Obtener referencia al NavigationView
+        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        MenuItem carritoItem = menu.findItem(R.id.carritoFragment);
+        carritoItem.setVisible(true);
+        MenuItem login = menu.findItem(R.id.loginFragment);
+        login.setVisible(false);
+        MenuItem logoutItem = menu.findItem(R.id.logoutItem);
+        logoutItem.setVisible(true);
+        navigationView.setCheckedItem(R.id.listProductFragment);
+
+        // Regresar al fragmento anterior
+        FragmentManager fragmentManager = getParentFragmentManager();
+        fragmentManager.popBackStack();
+    }
+
+
+
+
+    @Override
+    public void onTrabajadorResult(int idTrabajador) {
+        System.out.println("idTrabajador: " + idTrabajador);
+        // Aquí puedes realizar las operaciones necesarias con el idTrabajador, como guardarlo en SharedPreferences
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("idTrabajador", String.valueOf(idTrabajador));
+        editor.apply();
+
+        Intent intent = new Intent(getContext(), MenuActivity.class);
+        startActivity(intent);
     }
 }

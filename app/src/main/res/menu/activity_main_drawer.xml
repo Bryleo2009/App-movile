@@ -10,9 +10,21 @@
             android:icon="@drawable/baseline_inventory_24"
             android:title="Productos" />
         <item
+            android:id="@+id/carritoFragment"
+            style="?attr/iconoStyle"
+            android:icon="@drawable/baseline_inventory_24"
+            android:title="Carrito de compras"
+            android:visible="false"/>
+        <item
             android:id="@+id/loginFragment"
             style="?attr/iconoStyle"
             android:icon="@drawable/baseline_inventory_24"
             android:title="Iniciar Sesion" />
+        <item
+            android:id="@+id/logoutItem"
+            style="?attr/iconoStyle"
+            android:icon="@drawable/baseline_inventory_24"
+            android:visible="false"
+            android:title="Cerrar sesión" />
     </group>
 </menu>

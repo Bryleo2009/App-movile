@@ -20,9 +20,12 @@ import com.example.ofsystem.ListClientActivity;
 import com.example.ofsystem.ListProduct;
 import com.example.ofsystem.Model.Cliente;
 import com.example.ofsystem.Model.Cliente;
+import com.example.ofsystem.Model.Trabajador;
 import com.example.ofsystem.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +132,77 @@ public class ClienteServiceImpl {
         });
 
     }
+    public void listarCliente(String username, DataCallback callback) {
+        // Consumir el endpoint de la API RESTful usando la interfaz MyApi
+        System.out.println("Enviando solicitud HTTP...");
+        Call<Object> call = ClienteApi.getClientesbyUsername(username);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        System.out.println("Consumo Exitoso Cliente");
+                        Object responseBody = response.body();
+                        LinkedTreeMap<String, Object> responseMap = (LinkedTreeMap<String, Object>) responseBody;
+                        String idStr = responseMap.get("id").toString();
+                        double idDouble = Double.parseDouble(idStr);
+                        int idCliente = (int) idDouble;
+
+                        // Llamar al método onClienteResponse de la interfaz de devolución de llamada
+                        callback.onClienteResult(idCliente);
+                    } else {
+                        System.out.println("Consumo NO Exitoso " + response);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                System.out.println("Error al procesar la solicitud: " + t.getMessage());
+                // Mostrar la alerta flotante
+                Toast.makeText(context, "Error al procesar los datos", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void listarTrabajador(String username, DataCallback callback) {
+        // Consumir el endpoint de la API RESTful usando la interfaz MyApi
+        System.out.println("Enviando solicitud HTTP...");
+        Call<Object> call = ClienteApi.getTrabajadoresbyUsername(username);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        System.out.println("Consumo Exitoso trabajador");
+                        Object responseBody = response.body();
+                        LinkedTreeMap<String, Object> responseMap = (LinkedTreeMap<String, Object>) responseBody;
+                        String idStr = responseMap.get("id").toString();
+                        double idDouble = Double.parseDouble(idStr);
+                        int idTrabajador = (int) idDouble;
+
+                        // Llamar al método onTrabajadorResponse de la interfaz de devolución de llamada
+                        callback.onTrabajadorResult(idTrabajador);
+                    } else {
+                        System.out.println("Consumo NO Exitoso " + response);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                System.out.println("Error al procesar la solicitud: " + t.getMessage());
+                // Mostrar la alerta flotante
+                Toast.makeText(context, "Error al procesar los datos", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
     public void crearClientes(Context context, Cliente cliente, View v, boolean edit) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);

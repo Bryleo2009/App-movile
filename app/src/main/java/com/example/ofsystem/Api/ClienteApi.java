@@ -29,6 +29,9 @@ public interface ClienteApi {
     Call<Void> eliminarCliente(@Header("Authorization") String authToken,@Path("id") String id);
 
     @GET("/Clientes/byNum/{num}")
-    Call<Cliente> getClientesbyUsername(@Path("num") String username);
+    Call<Object> getClientesbyUsername(@Path("num") String username);
+
+    @GET("/Trabajadors/byNum/{num}")
+    Call<Object> getTrabajadoresbyUsername(@Path("num") String username);
 }
 
