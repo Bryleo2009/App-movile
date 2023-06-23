@@ -1,5 +1,7 @@
 package com.example.ofsystem.ui.product;
 
+// Importaciones de clases y bibliotecas adicionales
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,34 +14,33 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.ofsystem.FormProductActivity;
 import com.example.ofsystem.MenuActivity;
+import com.example.ofsystem.Model.CartItems;
 import com.example.ofsystem.R;
+import com.example.ofsystem.Service.ProductoAdapter;
 import com.example.ofsystem.Service.ProductoServiceImpl;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListProductFragment} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListProductFragment extends Fragment implements View.OnClickListener {
 
     RecyclerView listProduct;
     FloatingActionButton newProduct, edictProduct, eliminarProduct;
     SwipeRefreshLayout swipeRefreshLayout;
     ProductoServiceImpl productService = new ProductoServiceImpl();
+    private CartItems cartItems; // Variable para almacenar los elementos del carrito
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_product, container, false);
 
-        //Toolbar toolbar = view.findViewById(R.id.toolbar);
         newProduct = view.findViewById(R.id.accion_agregar);
         edictProduct = view.findViewById(R.id.accion_editar);
         eliminarProduct = view.findViewById(R.id.accion_eliminar);
@@ -50,18 +51,21 @@ public class ListProductFragment extends Fragment implements View.OnClickListene
         eliminarProduct.setOnClickListener(this);
 
         listProduct = view.findViewById(R.id.listProductos);
-        listProduct.setOnClickListener(this);
         listProduct.setHasFixedSize(true);
-        listProduct.setLayoutManager(new GridLayoutManager(this.getContext(),2));
-        productService.listarProductos2(listProduct);
+        listProduct.setLayoutManager(new GridLayoutManager(requireContext(), 2));
 
-        //toolbar.inflateMenu(R.menu.list_product_menu);
-//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                return onOptionsItemSelected(item);
-//            }
-//        });
+        // Crear una instancia de ProductoAdapter sin asignar cartItems inicialmente
+        ProductoAdapter adapter = new ProductoAdapter(new ArrayList<>());
+        listProduct.setAdapter(adapter);
+
+        // Recuperar los datos del carrito si están disponibles
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            cartItems = (CartItems) bundle.getSerializable("cartItems");
+            adapter.setCartItems(cartItems);
+        }
+
+        productService.listarProductos2(listProduct);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -88,7 +92,7 @@ public class ListProductFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if(v == newProduct){
+        if (v == newProduct) {
             Intent intent = new Intent(requireActivity(), FormProductActivity.class);
             startActivity(intent);
         }

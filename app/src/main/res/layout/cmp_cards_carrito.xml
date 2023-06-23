@@ -59,22 +59,26 @@
                 android:textStyle="bold"
                 android:theme="@style/Theme.Ejer1" />
 
-
-            <EditText
-                android:id="@+id/cantidad"
+            <TextView
+                android:id="@+id/txtCantidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number" />
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                android:text="Cantidad"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:theme="@style/Theme.Ejer1" />
 
             <Button
-                android:id="@+id/btnAgregarAlCarrito"
+                android:id="@+id/btnEliminarDelCarrito"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Agregar al carrito" />
+                android:text="Eliminar del carrito" />
+
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

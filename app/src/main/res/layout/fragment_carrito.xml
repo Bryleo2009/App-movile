@@ -4,11 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.CarritoFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:context=".ui.CarritoFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCarrito"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/cmp_cards_carrito" />
+
+    </LinearLayout>
+
 
 </FrameLayout>
