@@ -4,6 +4,7 @@ package com.example.ofsystem.ui.product;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +21,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.ofsystem.FormProductActivity;
 import com.example.ofsystem.MenuActivity;
+import com.example.ofsystem.Model.CartItem;
 import com.example.ofsystem.Model.CartItems;
 import com.example.ofsystem.R;
-import com.example.ofsystem.Service.ProductoAdapter;
 import com.example.ofsystem.Service.ProductoServiceImpl;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,16 +39,18 @@ public class ListProductFragment extends Fragment implements View.OnClickListene
     FloatingActionButton newProduct, edictProduct, eliminarProduct;
     SwipeRefreshLayout swipeRefreshLayout;
     ProductoServiceImpl productService = new ProductoServiceImpl();
-    private CartItems cartItems; // Variable para almacenar los elementos del carrito
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_product, container, false);
 
-        newProduct = view.findViewById(R.id.accion_agregar);
-        edictProduct = view.findViewById(R.id.accion_editar);
-        eliminarProduct = view.findViewById(R.id.accion_eliminar);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+
+        listProduct = view.findViewById(R.id.listProductos);
+        newProduct = (FloatingActionButton) view.findViewById(R.id.accion_agregar);
+        edictProduct = (FloatingActionButton) view.findViewById(R.id.accion_editar);
+        eliminarProduct = (FloatingActionButton) view.findViewById(R.id.accion_eliminar);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         newProduct.setOnClickListener(this);
@@ -53,17 +60,6 @@ public class ListProductFragment extends Fragment implements View.OnClickListene
         listProduct = view.findViewById(R.id.listProductos);
         listProduct.setHasFixedSize(true);
         listProduct.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-
-        // Crear una instancia de ProductoAdapter sin asignar cartItems inicialmente
-        ProductoAdapter adapter = new ProductoAdapter(new ArrayList<>());
-        listProduct.setAdapter(adapter);
-
-        // Recuperar los datos del carrito si están disponibles
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            cartItems = (CartItems) bundle.getSerializable("cartItems");
-            adapter.setCartItems(cartItems);
-        }
 
         productService.listarProductos2(listProduct);
 
@@ -105,4 +101,32 @@ public class ListProductFragment extends Fragment implements View.OnClickListene
             productService.eliminarProdcutos(requireActivity());
         }
     }
+
+    public CartItems obtenerCarrito() {
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+
+        // Obtener el carrito de compras como una cadena JSON desde SharedPreferences
+        String carritoJson = sharedPreferences.getString("carrito", "");
+
+        System.out.println("json: " + carritoJson);
+
+        // Convertir la cadena JSON a una lista de objetos de tipo CartItem
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<CartItem>>() {}.getType();
+        List<CartItem> cartItemsList = gson.fromJson(carritoJson, type);
+
+        System.out.println("cartItemsList: " + cartItemsList);
+
+        // Crear una instancia de CartItems y establecer la lista de elementos
+        CartItems cart = new CartItems();
+        cart.setItems(cartItemsList);
+
+        // Si no se pudo recuperar el carrito de compras, inicializar una lista vacía
+        if (cart.getItems() == null) {
+            cart.setItems(new ArrayList<>());
+        }
+
+        return cart;
+    }
+
 }

@@ -1,5 +1,5 @@
 package com.example.ofsystem.Service;
-
+import com.google.gson.reflect.TypeToken;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -27,6 +29,8 @@ import com.example.ofsystem.FormProductActivity;
 import com.example.ofsystem.ListClientActivity;
 import com.example.ofsystem.ListProduct;
 import com.example.ofsystem.MenuActivity;
+import com.example.ofsystem.Model.CartItem;
+import com.example.ofsystem.Model.CartItems;
 import com.example.ofsystem.Model.Color;
 import com.example.ofsystem.Model.Producto;
 import com.example.ofsystem.Model.ProductoFilter;
@@ -34,8 +38,10 @@ import com.example.ofsystem.Model.RegistroProductFilter;
 import com.example.ofsystem.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -467,6 +473,7 @@ public class ProductoServiceImpl {
 class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder> {
 
     private List<ProductoFilter> productoFilters;
+    private CartItems cartItems; // Variable para almacenar los elementos del carrito
 
     public ProductoAdapter(List<ProductoFilter> productoFilters) {
         this.productoFilters = productoFilters;
@@ -475,57 +482,66 @@ class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewH
     @NonNull
     @Override
     public ProductoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflar el diseño de la tarjeta de producto
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cmp_cards_product, parent, false);
-
-        // Crear una instancia del ViewHolder y establecer el OnClickListener
-        final ProductoViewHolder viewHolder = new ProductoViewHolder(itemView);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Obtener la posición del elemento en el adaptador
-                int position = viewHolder.getAdapterPosition();
-
-                // Obtener el producto actual
-                ProductoFilter productoFilter = productoFilters.get(position);
-
-                // Lógica para mostrar la alerta o diálogo
-                // ...
-
-                // Imprimir la información del objeto en la consola
-                System.out.println("Producto seleccionado: " + productoFilter.toString());
-
-                // Crear una instancia del diálogo y pasarle los datos
-                ModalServiceImpl dialog = ModalServiceImpl.newInstance(productoFilter);
-
-                // Mostrar el diálogo
-                FragmentManager fragmentManager = ((FragmentActivity) itemView.getContext()).getSupportFragmentManager();
-                dialog.show(fragmentManager, "my_dialog");
-            }
-        });
-
-        return viewHolder;
+        return new ProductoViewHolder(itemView);
     }
 
-
-
+    CartItems items = new CartItems();
     @Override
     public void onBindViewHolder(@NonNull ProductoViewHolder holder, int position) {
-        // Obtener el producto actual
         ProductoFilter productoFilter = productoFilters.get(position);
 
-        // Actualizar los elementos de la tarjeta con los datos del producto
         holder.txtNombreProducto.setText(productoFilter.getProducto().getNombreProduct());
         holder.txtPrecio.setText(String.valueOf(productoFilter.getProducto().getPrecioUni()));
         holder.txtTipo.setText(productoFilter.getProducto().getIdTipoProduc().getIdentItem());
-        try {
-            //Picasso.get().load(Config.BASE_URL + "/media/productosQr/" + ((Producto) mData).getIUP() + ".png").into(imageView);
 
-            Picasso.get().load(((ProductoFilter) productoFilter).getProducto().getImagen()).into(holder.productImageView);
+        try {
+            Picasso.get().load(productoFilter.getProducto().getImagen()).into(holder.productImageView);
             System.out.println("Imagen cargada correctamente");
         } catch (Exception e) {
             System.out.println("Error al cargar la imagen: " + e.getMessage());
         }
+
+        holder.btnAgregarAlCarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int cantidad = Integer.parseInt(holder.cantidad.getText().toString());
+                Producto productoId = productoFilter.getProducto();
+                CartItem item = new CartItem(productoId, cantidad);
+                items.addItem(item);
+                System.out.println(items);
+
+                SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                // Verificar si ya existe una lista de carrito en las preferencias compartidas
+                String carritoJson = sharedPreferences.getString("carrito", "");
+                if (!carritoJson.isEmpty()) {
+                    // Convertir el carrito de compras existente a una lista de objetos de tipo CartItem
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<List<CartItem>>() {}.getType();
+                    List<CartItem> existingItems = gson.fromJson(carritoJson, type);
+
+                    // Agregar los nuevos elementos al carrito existente
+                    existingItems.addAll(items.getItems());
+
+                    // Convertir la lista combinada de elementos a una representación de cadena (por ejemplo, JSON)
+                    carritoJson = gson.toJson(existingItems);
+                } else {
+                    // Convertir el carrito de compras completo a una representación de cadena (por ejemplo, JSON)
+                    Gson gson = new Gson();
+                    carritoJson = gson.toJson(items.getItems());
+                }
+
+                // Guardar el carrito de compras en SharedPreferences
+                editor.putString("carrito", carritoJson);
+                editor.apply();
+
+                Toast.makeText(v.getContext(), "Producto agregado al carrito. Cantidad: " + cantidad + " - " + productoFilter.getProducto().getIUP(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     @Override
@@ -538,6 +554,8 @@ class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewH
         TextView txtNombreProducto;
         TextView txtTipo;
         TextView txtPrecio;
+        Button btnAgregarAlCarrito;
+        EditText cantidad;
 
         public ProductoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -545,7 +563,8 @@ class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewH
             txtNombreProducto = itemView.findViewById(R.id.txtNombreProducto);
             txtTipo = itemView.findViewById(R.id.txtTipo);
             txtPrecio = itemView.findViewById(R.id.txtPrecio);
+            btnAgregarAlCarrito = itemView.findViewById(R.id.btnAgregarAlCarrito);
+            cantidad = itemView.findViewById(R.id.cantidad);
         }
     }
-
 }

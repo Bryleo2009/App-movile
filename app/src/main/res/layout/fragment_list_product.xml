@@ -26,50 +26,43 @@
             android:layout_width="0dp"
             android:layout_height="0dp" />
 
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/menu_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            fab:fab_addButtonColorNormal="?attr/colorPrimary"
+            fab:fab_addButtonSize="normal"
+            fab:fab_labelsPosition="left">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/accion_eliminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_icon="@drawable/baseline_delete_24"
+                fab:fab_size="mini"
+                fab:fab_title="Eliminar" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/accion_editar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_icon="@drawable/baseline_drive_file_rename_outline_24"
+                fab:fab_size="mini"
+                fab:fab_title="Editar" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/accion_agregar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_icon="@drawable/baseline_bookmark_add_24"
+                fab:fab_size="mini"
+                fab:fab_title="Agregar" />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/menu_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:visibility="invisible"
-        fab:fab_addButtonColorNormal="?attr/colorPrimary"
-        fab:fab_addButtonSize="normal"
-        fab:fab_labelsPosition="left">
-
-        <!--        app:fab_labelStyle="@style/Etiquetas"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/accion_eliminar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_icon="@drawable/baseline_delete_24"
-            fab:fab_size="mini"
-            fab:fab_title="Eliminar" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/accion_editar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_icon="@drawable/baseline_drive_file_rename_outline_24"
-            fab:fab_size="mini"
-            fab:fab_title="Editar" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/accion_agregar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_icon="@drawable/baseline_bookmark_add_24"
-            fab:fab_size="mini"
-            fab:fab_title="Agregar" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
 </FrameLayout>

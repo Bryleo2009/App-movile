@@ -65,13 +65,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btnAgregarAlCarrito"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Agregar al carrito" />
+                android:text="Agregar al carrito"
+                android:visibility="gone"/>
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

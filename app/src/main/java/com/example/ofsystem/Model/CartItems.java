@@ -64,6 +64,14 @@ public class CartItems implements Parcelable {
         }
         return sb.toString();
     }
+    public void setItems(List<CartItem> items) {
+        this.items = items;
+    }
 
+    public void removeItem(int position) {
+        if (items != null && position >= 0 && position < items.size()) {
+            items.remove(position);
+        }
+    }
 }
 
