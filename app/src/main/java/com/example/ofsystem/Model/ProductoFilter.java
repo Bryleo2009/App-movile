@@ -5,25 +5,30 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class ProductoFilter implements Serializable {
     Producto producto;
     List<Talla> tallas;
     List<Color> colors;
+    int cantidad;
 
+    public ProductoFilter() {
+        // Inicializar las listas como listas vacías en lugar de nulas
+        tallas = new ArrayList<>();
+        colors = new ArrayList<>();
+    }
 
     public com.example.ofsystem.Model.Producto getProducto() {
         return producto;
     }
 
     public void setProducto(com.example.ofsystem.Model.Producto producto) {
-        producto = producto;
+        this.producto = producto;
     }
-
     public String getTallas() {
         return concatenarTalla(tallas);
     }
@@ -70,5 +75,13 @@ public class ProductoFilter implements Serializable {
             }
         }
         return sb.toString();
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 }

@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.ofsystem.Model.CartItem;
 import com.example.ofsystem.Model.CartItems;
+import com.example.ofsystem.Model.ProductoFilter;
 import com.example.ofsystem.R;
+import com.example.ofsystem.Service.ProductoServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -25,11 +27,13 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarritoFragment extends Fragment {
+public class CarritoFragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private List<CartItem> cartItems;
     private ProductoAdapterCarrito cartAdapter;
+    Button btnRealizarCompra;
+    ProductoServiceImpl productService = new ProductoServiceImpl();
 
     public CarritoFragment() {
         // Constructor vacío requerido
@@ -42,6 +46,11 @@ public class CarritoFragment extends Fragment {
 
         // Inicializar la lista de elementos del carrito
         cartItems = obtenerCarrito().getItems();
+
+        if (cartItems != null) {
+            btnRealizarCompra = view.findViewById(R.id.btnRealizarCompra);
+            btnRealizarCompra.setOnClickListener(this);
+        }
 
         // Configurar el RecyclerView
         recyclerView = view.findViewById(R.id.recyclerViewCarrito);
@@ -115,6 +124,34 @@ public class CarritoFragment extends Fragment {
 
         return cart;
     }
+
+    @Override
+    public void onClick(View v) {
+        if (v == btnRealizarCompra) {
+            System.out.println("Accedí al botón");
+            List<ProductoFilter> productoFilters = new ArrayList<>();
+            System.out.println("cartItems " + cartItems);
+            try {
+                for (CartItem item : cartItems) {
+                    ProductoFilter productoFilter = new ProductoFilter();
+                    System.out.println(item.getProducto());
+                    productoFilter.setProducto(item.getProducto());
+                    productoFilter.setCantidad(item.getQuantity());
+                    productoFilters.add(productoFilter);
+                    eliminarProductoDelCarrito(item);
+                }
+
+                System.out.println(productoFilters.size());
+                // Pasar requireContext() como contexto al llamar a disminuirStock()
+                productService.disminuirStock(requireContext(), productoFilters);
+                actualizarCarrito();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+
 }
 
 class ProductoAdapterCarrito extends RecyclerView.Adapter<ProductoAdapterCarrito.ProductoViewHolder> {

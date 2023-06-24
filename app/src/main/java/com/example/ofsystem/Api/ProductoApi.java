@@ -28,6 +28,9 @@ public interface ProductoApi {
 
     @DELETE("/Productos/{id}")
     Call<Void> eliminarProducto(@Header("Authorization") String authToken, @Path("id") int id);
+
+    @PUT("/Productos/carrito")
+    Call<Void> CarritoOperador(@Header("Authorization") String authToken, @Body List<ProductoFilter> dato);
 }
 
 

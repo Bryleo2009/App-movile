@@ -1,4 +1,5 @@
 package com.example.ofsystem.Service;
+import com.example.ofsystem.ListMedioPagoActivity;
 import com.google.gson.reflect.TypeToken;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -458,6 +459,54 @@ public class ProductoServiceImpl {
         });
     }
 
+    public void disminuirStock(Context context, List<ProductoFilter> productoFilters) {
+        System.out.println("Enviando solicitud HTTP...");
+        // Utilizar el contexto proporcionado en lugar del contexto almacenado en el objeto ProductoServiceImpl
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", "");
+
+        Call<Void> call = ProductoApi.CarritoOperador("Bearer " + authToken,productoFilters);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    MaterialAlertDialogBuilder materialDialogBuilder = new MaterialAlertDialogBuilder(context)
+                            .setTitle("Stock disminuido")
+                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Acciones a realizar al hacer clic en Aceptar
+
+                                }
+                            });
+
+                    materialDialogBuilder.show();
+                    System.out.println("Stock disminuido con éxito");
+                } else {
+                    MaterialAlertDialogBuilder materialDialogBuilder = new MaterialAlertDialogBuilder(context)
+                            .setTitle("Stock no disminuido")
+                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Acciones a realizar al hacer clic en Aceptar
+
+                                }
+                            });
+
+                    materialDialogBuilder.show();
+                    System.out.println("Disminucion de stock no Exitoso "+ response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Error de red u otro tipo de error
+                // Maneja el error de acuerdo a tus necesidades
+                System.out.println("Consumo NO Exitoso " );
+            }
+        });
+    }
+
     public int obtenerElementoSeleccionado() {
         int position = spinner.getSelectedItemPosition();
         String selectedValue = spinner.getItemAtPosition(position).toString();
@@ -505,39 +554,51 @@ class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewH
         holder.btnAgregarAlCarrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int cantidad = Integer.parseInt(holder.cantidad.getText().toString());
-                Producto productoId = productoFilter.getProducto();
-                CartItem item = new CartItem(productoId, cantidad);
-                items.addItem(item);
-                System.out.println(items);
+                try {
+                    int cantidad = Integer.parseInt(holder.cantidad.getText().toString());
+                    if (cantidad > 0) {
+                        Producto productoId = productoFilter.getProducto();
+                        CartItem item = new CartItem(productoId, cantidad);
+                        items.addItem(item);
+                        System.out.println(items);
 
-                SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                // Verificar si ya existe una lista de carrito en las preferencias compartidas
-                String carritoJson = sharedPreferences.getString("carrito", "");
-                if (!carritoJson.isEmpty()) {
-                    // Convertir el carrito de compras existente a una lista de objetos de tipo CartItem
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<CartItem>>() {}.getType();
-                    List<CartItem> existingItems = gson.fromJson(carritoJson, type);
+                        // Obtener la lista existente de carrito de compras desde SharedPreferences
+                        String carritoJson = sharedPreferences.getString("carrito", "");
+                        List<CartItem> existingItems = new ArrayList<>();
 
-                    // Agregar los nuevos elementos al carrito existente
-                    existingItems.addAll(items.getItems());
+                        if (!carritoJson.isEmpty()) {
+                            // Convertir la lista de carrito de compras existente a objetos CartItem
+                            Gson gson = new Gson();
+                            Type type = new TypeToken<List<CartItem>>() {}.getType();
+                            existingItems = gson.fromJson(carritoJson, type);
+                        }
 
-                    // Convertir la lista combinada de elementos a una representación de cadena (por ejemplo, JSON)
-                    carritoJson = gson.toJson(existingItems);
-                } else {
-                    // Convertir el carrito de compras completo a una representación de cadena (por ejemplo, JSON)
-                    Gson gson = new Gson();
-                    carritoJson = gson.toJson(items.getItems());
+                        // Agregar el nuevo elemento al carrito existente
+                        existingItems.add(item);
+
+                        // Convertir la lista de elementos a una representación de cadena (por ejemplo, JSON)
+                        Gson gson = new Gson();
+                        carritoJson = gson.toJson(existingItems);
+
+                        // Guardar el carrito de compras actualizado en SharedPreferences
+                        editor.putString("carrito", carritoJson);
+                        editor.apply();
+
+                        // Limpiar el campo de cantidad
+                        holder.cantidad.setText("");
+
+                        Toast.makeText(v.getContext(), "Producto agregado al carrito. Cantidad: " + cantidad + " - " + productoFilter.getProducto().getIUP(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Si la cantidad es menor o igual a 0, mostrar mensaje de error
+                        Toast.makeText(v.getContext(), "La cantidad debe ser mayor a 0", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e){
+                    Toast.makeText(v.getContext(), "La cantidad debe ser mayor a 0", Toast.LENGTH_SHORT).show();
                 }
 
-                // Guardar el carrito de compras en SharedPreferences
-                editor.putString("carrito", carritoJson);
-                editor.apply();
-
-                Toast.makeText(v.getContext(), "Producto agregado al carrito. Cantidad: " + cantidad + " - " + productoFilter.getProducto().getIUP(), Toast.LENGTH_SHORT).show();
             }
         });
 

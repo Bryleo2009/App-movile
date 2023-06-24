@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.CarritoFragment">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -14,10 +13,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCarrito"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="670dp"
             tools:listitem="@layout/cmp_cards_carrito" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/btnRealizarCompra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Realizar Compra" />
 
+    </LinearLayout>
 
 </FrameLayout>
