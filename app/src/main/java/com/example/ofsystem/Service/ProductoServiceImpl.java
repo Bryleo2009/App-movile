@@ -541,7 +541,21 @@ class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewH
             }
         });
 
+// Agregar OnClickListener al card de producto
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Imprimir la información del objeto en la consola
+                System.out.println("Producto seleccionado: " + productoFilter.toString());
 
+                // Crear una instancia del diálogo y pasarle los datos
+                ModalServiceImpl dialog = ModalServiceImpl.newInstance(productoFilter);
+
+                // Mostrar el diálogo
+                FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                dialog.show(fragmentManager, "my_dialog");
+            }
+        });
     }
 
     @Override
