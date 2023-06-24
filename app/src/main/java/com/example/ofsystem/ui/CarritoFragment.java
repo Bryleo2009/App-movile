@@ -1,5 +1,6 @@
 package com.example.ofsystem.ui;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -11,20 +12,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.ofsystem.Model.CartItem;
 import com.example.ofsystem.Model.CartItems;
+import com.example.ofsystem.Model.Cliente;
+import com.example.ofsystem.Model.ComprobanteFilter;
 import com.example.ofsystem.Model.ProductoFilter;
+import com.example.ofsystem.Model.Trabajador;
 import com.example.ofsystem.R;
+import com.example.ofsystem.Service.ComprobanteServiceImpl;
 import com.example.ofsystem.Service.ProductoServiceImpl;
+import com.example.ofsystem.WebViewActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CarritoFragment extends Fragment implements View.OnClickListener {
@@ -34,6 +43,7 @@ public class CarritoFragment extends Fragment implements View.OnClickListener {
     private ProductoAdapterCarrito cartAdapter;
     Button btnRealizarCompra;
     ProductoServiceImpl productService = new ProductoServiceImpl();
+    ComprobanteServiceImpl comprobanteService = new ComprobanteServiceImpl();
 
     public CarritoFragment() {
         // Constructor vacío requerido
@@ -104,7 +114,6 @@ public class CarritoFragment extends Fragment implements View.OnClickListener {
 
     private CartItems obtenerCarrito() {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
-
         // Obtener el carrito de compras como una cadena JSON desde SharedPreferences
         String carritoJson = sharedPreferences.getString("carrito", "");
 
@@ -131,18 +140,52 @@ public class CarritoFragment extends Fragment implements View.OnClickListener {
             System.out.println("Accedí al botón");
             List<ProductoFilter> productoFilters = new ArrayList<>();
             System.out.println("cartItems " + cartItems);
+            double monto = 0;
+            // Generación de comprobante
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+            int idCliente = Integer.parseInt(sharedPreferences.getString("idCliente", ""));
+            ComprobanteFilter comprobanteFilter = new ComprobanteFilter();
+            Cliente cliente = new Cliente();
+            cliente.setId(idCliente);
+            comprobanteFilter.setCliente(cliente);
+
+            // Disminución de stock
             try {
-                for (CartItem item : cartItems) {
+                Iterator<CartItem> iterator = cartItems.iterator();
+                while (iterator.hasNext()) {
+                    CartItem item = iterator.next();
                     ProductoFilter productoFilter = new ProductoFilter();
                     System.out.println(item.getProducto());
+                    if (item.getProducto().getPrecioDescuProduct() != 0) {
+                        monto += item.getProducto().getPrecioDescuProduct() * item.getQuantity();
+                    } else {
+                        monto += item.getProducto().getPrecioUni() * item.getQuantity();
+                    }
                     productoFilter.setProducto(item.getProducto());
                     productoFilter.setCantidad(item.getQuantity());
                     productoFilters.add(productoFilter);
-                    eliminarProductoDelCarrito(item);
+                    iterator.remove(); // Eliminar el elemento de forma segura utilizando el iterador
                 }
+
+                comprobanteFilter.setProductoStorageList(productoFilters);
+                comprobanteFilter.setMontoProducto(monto);
+                comprobanteFilter.setIgv(monto * 0.18);
+                comprobanteFilter.setAmmount(comprobanteFilter.getIgv() + comprobanteFilter.getMontoProducto());
+                comprobanteFilter.setDireccionComp("Lima");
+                comprobanteFilter.setUbigeoComp("150101");
+                comprobanteFilter.setIdTc(true);
+                Trabajador trabajador = new Trabajador();
+                trabajador.setId(2);
+                comprobanteFilter.setTrabajador(trabajador);
+                // Acceder a datos del cliente
+                comprobanteFilter.setNombreRecojo("");
+                comprobanteFilter.setApellidoRecojo("");
+                comprobanteFilter.setCelularRecojo("");
+                comprobanteFilter.setCorreoRecojo("");
 
                 System.out.println(productoFilters.size());
                 // Pasar requireContext() como contexto al llamar a disminuirStock()
+                comprobanteService.crearComprobantes(requireContext(), comprobanteFilter, v, false);
                 productService.disminuirStock(requireContext(), productoFilters);
                 actualizarCarrito();
             } catch (Exception e) {
@@ -150,6 +193,7 @@ public class CarritoFragment extends Fragment implements View.OnClickListener {
             }
         }
     }
+
 
 
 }

@@ -17,6 +17,7 @@ import com.example.ofsystem.Api.ComprobanteApi;
 import com.example.ofsystem.Config.Config;
 import com.example.ofsystem.Model.ComprobanteFilter;
 import com.example.ofsystem.R;
+import com.example.ofsystem.WebViewActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -67,9 +68,9 @@ public class ComprobanteServiceImpl {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         // Acciones a realizar al hacer clic en Aceptar
-//                                        Intent intent = new Intent(context, ListComprobanteActivity.class);
-//                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // Agrega esta línea si estás llamando desde una clase sin actividad
-//                                        context.startActivity(intent);
+                                        Intent intent = new Intent(context, WebViewActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // Agrega esta línea si estás llamando desde una clase sin actividad
+                                        context.startActivity(intent);
                                     }
                                 });
 

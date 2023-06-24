@@ -470,30 +470,8 @@ public class ProductoServiceImpl {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    MaterialAlertDialogBuilder materialDialogBuilder = new MaterialAlertDialogBuilder(context)
-                            .setTitle("Stock disminuido")
-                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Acciones a realizar al hacer clic en Aceptar
-
-                                }
-                            });
-
-                    materialDialogBuilder.show();
                     System.out.println("Stock disminuido con éxito");
                 } else {
-                    MaterialAlertDialogBuilder materialDialogBuilder = new MaterialAlertDialogBuilder(context)
-                            .setTitle("Stock no disminuido")
-                            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Acciones a realizar al hacer clic en Aceptar
-
-                                }
-                            });
-
-                    materialDialogBuilder.show();
                     System.out.println("Disminucion de stock no Exitoso "+ response);
                 }
             }
