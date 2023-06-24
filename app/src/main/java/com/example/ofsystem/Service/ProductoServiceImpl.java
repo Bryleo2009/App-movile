@@ -112,7 +112,7 @@ public class ProductoServiceImpl {
 //                                    tvDescripcion.setText(productoFilter.getProducto().getDescripcionProduct());
 
                                     TextView tvTipo = (TextView) itemView.findViewById(R.id.txtTipo);
-                                    tvTipo.setText(productoFilter.getProducto().getIdTipoProduc().getIdentItem());
+                                    tvTipo.setText(productoFilter.getProducto().getIdTipoProduc().getVistaItem());
 
 //                                    TextView tvId = (TextView) itemView.findViewById(R.id.txtId);
 //                                    tvId.setText(String.valueOf(productoFilter.getProducto().getIdProduct()));
@@ -493,7 +493,7 @@ class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewH
 
         holder.txtNombreProducto.setText(productoFilter.getProducto().getNombreProduct());
         holder.txtPrecio.setText(String.valueOf(productoFilter.getProducto().getPrecioUni()));
-        holder.txtTipo.setText(productoFilter.getProducto().getIdTipoProduc().getIdentItem());
+        holder.txtTipo.setText(productoFilter.getProducto().getIdTipoProduc().getVistaItem());
 
         try {
             Picasso.get().load(productoFilter.getProducto().getImagen()).into(holder.productImageView);

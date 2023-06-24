@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.ofsystem.Model.CartItem;
 import com.example.ofsystem.Model.CartItems;
 import com.example.ofsystem.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -138,6 +140,15 @@ class ProductoAdapterCarrito extends RecyclerView.Adapter<ProductoAdapterCarrito
 
         holder.txtNombreProducto.setText(cartItem.getProducto().getNombreProduct());
         holder.txtCantidad.setText(String.valueOf(cartItem.getQuantity()));
+        holder.txtPrecio.setText(String.valueOf(cartItem.getProducto().getPrecioUni()));
+        holder.txtTipo.setText(cartItem.getProducto().getIdTipoProduc().getIdentItem());
+
+        try {
+            Picasso.get().load(cartItem.getProducto().getImagen()).into(holder.productImageView);
+            System.out.println("Imagen cargada correctamente");
+        } catch (Exception e) {
+            System.out.println("Error al cargar la imagen: " + e.getMessage());
+        }
         // Otros elementos de la tarjeta del carrito...
 
         holder.btnEliminar.setOnClickListener(new View.OnClickListener() {
@@ -164,9 +175,15 @@ class ProductoAdapterCarrito extends RecyclerView.Adapter<ProductoAdapterCarrito
         TextView txtNombreProducto;
         TextView txtCantidad;
         Button btnEliminar;
+        ImageView productImageView;
+        TextView txtTipo;
+        TextView txtPrecio;
 
         public ProductoViewHolder(@NonNull View itemView) {
             super(itemView);
+            productImageView = itemView.findViewById(R.id.productImageView);
+            txtTipo = itemView.findViewById(R.id.txtTipo);
+            txtPrecio = itemView.findViewById(R.id.txtPrecio);
             txtNombreProducto = itemView.findViewById(R.id.txtNombreProducto);
             txtCantidad = itemView.findViewById(R.id.txtCantidad);
             btnEliminar = itemView.findViewById(R.id.btnEliminarDelCarrito);
