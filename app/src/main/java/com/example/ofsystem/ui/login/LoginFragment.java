@@ -132,6 +132,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Dat
         editor.putString("idCliente", String.valueOf(idCliente));
         editor.apply();
 
+        View viewcpm = getLayoutInflater().inflate(R.layout.cmp_cards_product, null);
+        if (viewcpm != null) {
+            Button button = viewcpm.findViewById(R.id.btnAgregarAlCarrito);
+
+            if (button != null) {
+                button.setVisibility(View.VISIBLE); // Mostrar el botón en el Fragmento A
+            }
+        }
+
         // Obtener referencia al NavigationView
         NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();

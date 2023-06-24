@@ -565,6 +565,15 @@ class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewH
             txtPrecio = itemView.findViewById(R.id.txtPrecio);
             btnAgregarAlCarrito = itemView.findViewById(R.id.btnAgregarAlCarrito);
             cantidad = itemView.findViewById(R.id.cantidad);
+            SharedPreferences sharedPreferences = itemView.getContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+            // Obtener el carrito de compras como una cadena JSON desde SharedPreferences
+            String idCliente = sharedPreferences.getString("idCliente", "");
+            System.out.println("idCliente "+idCliente);
+            if (!idCliente.equals("")){
+                btnAgregarAlCarrito.setVisibility(View.VISIBLE);
+                cantidad.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 }
