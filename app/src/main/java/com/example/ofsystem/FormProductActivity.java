@@ -182,6 +182,9 @@ public class FormProductActivity extends AppCompatActivity implements AdapterVie
             producto.setPrecioUni(precioUniProduct);
             producto.setPrecioDescuProduct(precioDescProduct);
             producto.setImagen(imagenProduct);
+            if(producto.getImagen().equals("") || producto.getImagen().equals(" ") || producto.getImagen().equals(null)){
+                producto.setImagen("https://cdn-icons-png.flaticon.com/512/2132/2132385.png");
+            }
             producto.setIdCateg(new Categoria(categoriaService.obtenerElementoSeleccionado()));
             producto.setIdMarca(new Marca(marcaService.obtenerElementoSeleccionado()));
             producto.setIdTipoProduc(new TipoProducto(tipoProductoService.obtenerElementoSeleccionado()));
