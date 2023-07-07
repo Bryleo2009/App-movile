@@ -21,8 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener{
-    LinearLayout btnProductos,btnClientes, btnProveedor, btnMedioPago, btnTipoComprobante;
-    Button bt1, bt2, btn4,btn5, btn6;
+    LinearLayout btnProductos,btnClientes, btnProveedor, btnMedioPago, btnTipoComprobante, btnGraficos;
+    Button bt1, bt2, btn4,btn5, btn6, btn7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         btnTipoComprobante.setOnClickListener(this);
         btn6.setOnClickListener(this);
 
+        btnGraficos = findViewById(R.id.btnGraficos);
+        btn7 = findViewById(R.id.btn7);
+        btnGraficos.setOnClickListener(this);
+        btn7.setOnClickListener(this);
+
         //activacion del toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,6 +85,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (v == btnTipoComprobante || v == btn6) {
             Intent intent = new Intent(MenuActivity.this, ListTipoComprobanteActivity.class);
+            startActivity(intent);
+        }
+        if (v == btnGraficos || v == btn7) {
+            Intent intent = new Intent(MenuActivity.this, GrapActivity.class);
             startActivity(intent);
         }
 

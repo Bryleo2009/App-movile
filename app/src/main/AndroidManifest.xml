@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -17,8 +18,9 @@
         android:theme="@style/Theme.Ejer1"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-
+        <activity
+            android:name=".GrapActivity"
+            android:exported="false" />
         <activity
             android:name=".NavMainActivity"
             android:exported="true"
@@ -65,10 +67,7 @@
             android:exported="false" />
         <activity
             android:name=".MenuActivity"
-            android:exported="false" />
-
-        <!-- Resto de tus actividades -->
-
+            android:exported="false" /> <!-- Resto de tus actividades -->
         <meta-data
             android:name="com.example.app.DEVELOPER_NAME"
             android:value="Nombre del desarrollador" />
@@ -84,8 +83,9 @@
         <meta-data
             android:name="company_name"
             android:value="Your Company Name" />
-        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing" android:value="false" />
-
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="false" />
     </application>
 
 </manifest>
